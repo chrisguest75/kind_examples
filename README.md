@@ -1,8 +1,8 @@
 # README
-A repo for examples of Kubernetes features using Kind as a cluster
+A repo for examples of Kubernetes features using Kind as a cluster   
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
-TODO:
+## TODO
 * Build clusters
 * Publishing images
 * Services
@@ -21,7 +21,7 @@ kind v0.7.0 go1.12.5 darwin/amd64
 kubectx and kubens - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
 
 ## 01_Creation
-Demonstrates how to build a cluster using kind
+Demonstrates how to build a cluster using kind   
 [README.md](01_creation/README.md)
 
 
