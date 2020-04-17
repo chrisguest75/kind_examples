@@ -3,6 +3,7 @@ A repo for examples of Kubernetes features using Kind as a cluster
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
 ## TODO
+* Local docker desktop registry access
 * Build clusters
 * Publishing images
 * Services
@@ -10,6 +11,10 @@ A repo for examples of Kubernetes features using Kind as a cluster
 * Stateful set
 * Skaffold
 * Create a CRD
+* Metrics export
+* Namespaces and RBAC
+* Fluentd
+* Open census
 
 ## Installation
 ```sh

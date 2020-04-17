@@ -30,3 +30,7 @@ kubectl get pods --all-namespaces
 kubectl api-resources
 ```
 
+## Remove Cluster
+```sh
+kind delete cluster --name mykind 
+```
