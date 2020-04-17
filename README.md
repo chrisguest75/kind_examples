@@ -29,4 +29,6 @@ kubectx and kubens - [https://github.com/ahmetb/kubectx](https://github.com/ahme
 Demonstrates how to build a cluster using kind   
 [README.md](01_creation/README.md)
 
-
+## 03_Deploy_Pod
+Demonstrates how to deploy a simple hello world pod  
+[README.md](03_deploy_pod/README.md)
