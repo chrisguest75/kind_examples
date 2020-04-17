@@ -32,3 +32,7 @@ Demonstrates how to build a cluster using kind
 ## 03_Deploy_Pod
 Demonstrates how to deploy a simple hello world pod  
 [README.md](03_deploy_pod/README.md)
+
+## 04_deployments
+Demonstrates how to deploy a simple hello world deployment 
+[README.md](04_deployments/README.md)
