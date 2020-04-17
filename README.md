@@ -3,6 +3,9 @@ A repo for examples of Kubernetes features using Kind as a cluster
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
 ## TODO
+* Helm3
+* Add a queue simple service and chart
+* Kustomize example.
 * Local docker desktop registry access
 * Build clusters
 * Publishing images
@@ -36,3 +39,7 @@ Demonstrates how to deploy a simple hello world pod
 ## 04_deployments
 Demonstrates how to deploy a simple hello world deployment 
 [README.md](04_deployments/README.md)
+
+## 05_simple_helm3
+Demonstrates how to use helm3 to create and deploy a simple deployment.
+[README.md](05_simple_helm3/README.md)
