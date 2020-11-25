@@ -37,9 +37,9 @@ Demonstrates how to deploy a simple hello world pod
 [README.md](03_deploy_pod/README.md)
 
 ## 04_deployments
-Demonstrates how to deploy a simple hello world deployment 
+Demonstrates how to deploy a simple hello world deployment  
 [README.md](04_deployments/README.md)
 
 ## 05_simple_helm3
-Demonstrates how to use helm3 to create and deploy a simple deployment.
+Demonstrates how to use helm3 to create and deploy a simple deployment.  
 [README.md](05_simple_helm3/README.md)
