@@ -6,7 +6,7 @@ Demonstrates how to build a cluster using Kind
 ```sh
 kind create cluster --config ingress_cluster.yaml --name myingress
 kubectl cluster-info --context kind-myingress
-kubectl apply -f ./usage.yaml 
+kubectl apply -f ./ingress.yaml 
 ```
 
 ### Examine the cluster
@@ -20,7 +20,7 @@ kubectl api-resources
 
 ### Remove Cluster
 ```sh
-kind delete cluster --name mykind 
+kind delete cluster --name myingress 
 ```
 
 
