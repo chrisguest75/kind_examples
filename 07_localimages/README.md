@@ -1,5 +1,5 @@
 # README.md
-Demonstrates how to deploy a simple pod from a local image
+Demonstrates how to deploy a simple pod from a local image  
 
 ## Build and Test Locally
 Build and test the image

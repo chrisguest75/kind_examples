@@ -43,3 +43,11 @@ Demonstrates how to deploy a simple hello world deployment
 ## 05_simple_helm3
 Demonstrates how to use helm3 to create and deploy a simple deployment.  
 [README.md](05_simple_helm3/README.md)
+
+## 07_localimages
+Demonstrates how to deploy a simple pod from a local image  
+[README.md](07_localimages/README.md)
+
+## 08_skaffold
+Demonstrates how to configure skaffold to work with kind  
+[README.md](08_skaffold/README.md)

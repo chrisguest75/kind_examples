@@ -1,5 +1,5 @@
 # README
-Demonstrates how to configure skaffold to work with kind
+Demonstrates how to configure skaffold to work with kind  
 
 [skaffold.dev](https://skaffold.dev/)  
   
@@ -26,6 +26,5 @@ skaffold init
 ```
 
 ```sh
-
 skaffold dev 
 ```
