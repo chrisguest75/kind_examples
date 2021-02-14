@@ -1,0 +1,36 @@
+# yaml resource file for deployment from skaffold
+
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: "skaffoldtest"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: skaffoldtest
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: skaffoldtest
+        track: stable
+        version: 0.1.0
+    spec:
+      containers:
+        - name: skaffoldtest
+          image: skaffoldtest
+          imagePullPolicy: Always
+          #ports:
+          #  - name: debug
+          #    containerPort: 5678          
+          env:
+            - name: VALUE1
+              value: "True"
+            - name: VALUE2
+              value: "True"
+
+          resources:
+            limits:
+              cpu: "1"            
+            requests:
+              cpu: "10m"

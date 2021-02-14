@@ -2,9 +2,10 @@
 Demonstrates how to build a cluster using Kind
 
 ## Simple Example 
-Create the cluster
 ```sh
-> kind create cluster --name mykind --wait 1m  
+# Create the cluster
+kind create cluster --name mykind --wait 1m  
+
 Creating cluster "mykind" ...
  ✓ Ensuring node image (kindest/node:v1.17.0) 🖼
  ✓ Preparing nodes 📦
@@ -17,6 +18,19 @@ Creating cluster "mykind" ...
 Set kubectl context to "kind-mykind"
 You can now use your cluster with:
 
+# You should have a new context
+kubectx
+
+# The default namespaces should exist
+kubens
+
+# list clusters
+kind get clusters 
+
+# list nodes
+kind get nodes --name mykind 
+
+# Ensure everything is running
 kubectl cluster-info --context kind-mykind
 ```
 
