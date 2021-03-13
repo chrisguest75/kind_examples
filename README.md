@@ -44,6 +44,10 @@ Demonstrates how to deploy a simple hello world deployment
 Demonstrates how to use helm3 to create and deploy a simple deployment.  
 [README.md](05_simple_helm3/README.md)
 
+## 06_ingress
+Demonstrates how to install an ingress controller on kind  
+[README.md](06_ingress/README.md)
+
 ## 07_localimages
 Demonstrates how to deploy a simple pod from a local image  
 [README.md](07_localimages/README.md)
