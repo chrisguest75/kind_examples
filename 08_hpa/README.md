@@ -30,6 +30,9 @@ kubectl get pods --all-namespaces
 
 kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"
 
+Copied the values from here. 
+https://raw.githubusercontent.com/bitnami/charts/master/bitnami/metrics-server/values.yaml
+
 
 # Resources 
  https://javamana.com/2021/06/20210618115631001y.html
