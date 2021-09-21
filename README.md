@@ -44,6 +44,10 @@ Demonstrates how to deploy a simple hello world deployment
 Demonstrates how to use helm3 to create and deploy a simple deployment.  
 [README.md](05_simple_helm3/README.md)
 
+## 06_volumes
+Demonstrate how to share a local volume into a container on Kind    
+[README.md](06_volumes/README.md)
+
 ## 07_localimages
 Demonstrates how to deploy a simple pod from a local image  
 [README.md](07_localimages/README.md)
