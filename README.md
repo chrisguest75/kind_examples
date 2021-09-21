@@ -1,7 +1,6 @@
 # README
 A repo for examples of Kubernetes features using Kind as a cluster   
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
-
 ## TODO
 * Helm3
 * Add a queue simple service and chart
@@ -22,11 +21,20 @@ A repo for examples of Kubernetes features using Kind as a cluster
 ## Installation
 ```sh
 kind version
-kind v0.7.0 go1.12.5 darwin/amd64
+kind v0.11.1 go1.16.4 darwin/amd64
 ```
 
+```sh
+kind version 
+brew install kind
+```
 ## Tools
 kubectx and kubens - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
+
+```sh
+brew install kubectx
+brew install kubens
+```
 
 ## 01_Creation
 Demonstrates how to build a cluster using kind   
@@ -48,6 +56,12 @@ Demonstrates how to use helm3 to create and deploy a simple deployment.
 Demonstrates how to deploy a simple pod from a local image  
 [README.md](07_localimages/README.md)
 
+## 07_rbac_users
+Demonstrates how to use rbac to provide isolation to tenants of the cluster
+[README.md](07_rbac_users/README.md)
+
 ## 08_skaffold
 Demonstrates how to configure skaffold to work with kind  
 [README.md](08_skaffold/README.md)
+
+
