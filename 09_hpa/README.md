@@ -39,18 +39,52 @@ The response should look like this.
 {"kind":"NodeMetricsList","apiVersion":"metrics.k8s.io/v1beta1","metadata":{},"items":[{"metadata":{"name":"mykind-control-plane","creationTimestamp":"2021-09-23T08:37:37Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/os":"linux","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"mykind-control-plane","kubernetes.io/os":"linux","node-role.kubernetes.io/control-plane":"","node-role.kubernetes.io/master":"","node.kubernetes.io/exclude-from-external-load-balancers":""}},"timestamp":"2021-09-23T08:36:45Z","window":"51s","usage":{"cpu":"277712796n","memory":"693412Ki"}},{"metadata":{"name":"mykind-worker","creationTimestamp":"2021-09-23T08:37:37Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/os":"linux","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"mykind-worker","kubernetes.io/os":"linux"}},"timestamp":"2021-09-23T08:36:49Z","window":"1m0s","usage":{"cpu":"93433003n","memory":"323568Ki"}}]}
 ```
 
+
 ## Configure deployment
 ```sh
-helm repo add podinfo https://stefanprodan.github.io/podinfo
+
+kubectl create -f ./deployment.yaml
+# View pods
+kubectl get deployments 
+kubectl get pods
+
+kubectl autoscale deployment deployment --cpu-percent=20 --min=1 --max=10 
+
+# kickstart an ubuntu pod
+kubectl run testubuntu --image=ubuntu:18.04 -n default --limits="cpu=200m,memory=512Mi" --restart=Never -- /bin/sh -c "sleep 10000"
+
+# shell into it
+kubectl exec -it testubuntu -- /bin/sh
+
+# install some tools
+apt update
+apt install curl dnsutils iputils-ping telnet -y 
+
+
+kubectl get services podinfo
+kubectl get endpoints podinfo
+
+dig podinfo.default.svc.cluster.local 
+curl podinfo.default.svc.cluster.local
+
+https://github.com/chrisguest75/ckad/tree/master/02_services
+
+
+apt-get install apache2-utils -y
+ab -n 1000 -c 100 http://podinfo.default.svc.cluster.local/env
+ab -n 10000 -c 1000 http://podinfo.default.svc.cluster.local/delay/5
+
 ```
 
 ## Cleanup
 ```sh
 helm delete my-metrics  
+kind delete cluster --name mykind 
 ```
 
 ## Troubleshooting
 ```sh
+kubectl get all
 kubectl get pods --all-namespaces        
 
 export POD=my-metrics-metrics-server-5b5898644f-bbpv8 
@@ -64,3 +98,7 @@ kubectl logs $POD -n default
 # Resources 
 * Example of using HPA
  https://javamana.com/2021/06/20210618115631001y.html
+
+https://github.com/stefanprodan/podinfo
+
+ helm repo add podinfo https://stefanprodan.github.io/podinfo
