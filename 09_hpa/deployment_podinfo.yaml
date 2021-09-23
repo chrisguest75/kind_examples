@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: podinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    metadata:
+      labels:
+        app: podinfo
+    spec:
+      containers:
+      - name: podinfo
+        image: ghcr.io/stefanprodan/podinfo:6.0.0
+        ports:
+        - containerPort: 80
+
+        resources:
+          limits: # Maximum restriction
+            cpu: 500m # CPU The biggest is 500 micronucleus
+          requests: # Minimum guarantee
+            cpu: 200m # CPU The minimum is 200 micronucleus
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podinfo
+spec:
+  type: ClusterIP
+  selector:
+    app: podinfo
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 9898

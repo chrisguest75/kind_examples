@@ -28,6 +28,11 @@ kind v0.7.0 go1.12.5 darwin/amd64
 ## Tools
 kubectx and kubens - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
 
+## Describing Resources
+```sh
+kubectl explain deployment.spec.template.spec.containers
+```
+
 ## 01_Creation
 Demonstrates how to build a cluster using kind   
 [README.md](01_creation/README.md)
@@ -55,3 +60,8 @@ Demonstrates how to deploy a simple pod from a local image
 ## 08_skaffold
 Demonstrates how to configure skaffold to work with kind  
 [README.md](08_skaffold/README.md)
+
+## 09_hpa
+Demonstrate how to use the HPA for scaling.
+[README.md](09_hpa/README.md)
+
