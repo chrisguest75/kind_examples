@@ -55,3 +55,8 @@ Demonstrates how to deploy a simple pod from a local image
 ## 08_skaffold
 Demonstrates how to configure skaffold to work with kind  
 [README.md](08_skaffold/README.md)
+
+## 09_hpa
+Demonstrate how to use the HPA for scaling.
+[README.md](09_hpa/README.md)
+
