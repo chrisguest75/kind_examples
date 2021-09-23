@@ -24,8 +24,8 @@ nodes:
 - role: control-plane
 # the three workers
 - role: worker
-  extraMounts:
-  - hostPath: /Users/chrisguest/Code/Scratch/kind_examples/08_hpa/metrics_volume
-    containerPath: /metrics_volume
+  #extraMounts:
+  #- hostPath: /Users/chrisguest/Code/Scratch/kind_examples/08_hpa/metrics_volume
+  #  containerPath: /metrics_volume
 #- role: worker
 #- role: worker

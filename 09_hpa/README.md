@@ -43,7 +43,7 @@ The response should look like this.
 ## Configure deployment
 ```sh
 # Add deployment and service 
-kubectl create -f ./deployment.yaml
+kubectl create -f ./deployment_podinfo.yaml
 # view pods
 kubectl get all 
 
@@ -58,6 +58,7 @@ kubectl get services podinfo
 kubectl get endpoints podinfo
 ```
 
+Jump onto the ubuntu container
 ```sh
 # shell into it
 kubectl exec -it testubuntu -- /bin/sh
@@ -72,8 +73,14 @@ curl podinfo.default.svc.cluster.local
 
 # Install apache bench to stress it.
 apt-get install apache2-utils -y
-ab -n 1000 -c 100 http://podinfo.default.svc.cluster.local/env
-ab -n 10000 -c 1000 http://podinfo.default.svc.cluster.local/delay/5
+ab -n 10000 -c 3000 http://podinfo.default.svc.cluster.local/env
+ab -n 10000 -c 3000 http://podinfo.default.svc.cluster.local/delay/5
+```
+
+```sh
+ kubectl top pods
+# on host view the pods
+kubectl get all 
 ```
 
 ## Cleanup
