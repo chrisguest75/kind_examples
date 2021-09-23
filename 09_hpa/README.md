@@ -42,17 +42,23 @@ The response should look like this.
 
 ## Configure deployment
 ```sh
-
+# Add deployment and service 
 kubectl create -f ./deployment.yaml
-# View pods
-kubectl get deployments 
-kubectl get pods
+# view pods
+kubectl get all 
 
+# add the hpa
 kubectl autoscale deployment deployment --cpu-percent=20 --min=1 --max=10 
 
 # kickstart an ubuntu pod
 kubectl run testubuntu --image=ubuntu:18.04 -n default --limits="cpu=200m,memory=512Mi" --restart=Never -- /bin/sh -c "sleep 10000"
 
+# get ip addresses
+kubectl get services podinfo
+kubectl get endpoints podinfo
+```
+
+```sh
 # shell into it
 kubectl exec -it testubuntu -- /bin/sh
 
@@ -60,29 +66,24 @@ kubectl exec -it testubuntu -- /bin/sh
 apt update
 apt install curl dnsutils iputils-ping telnet -y 
 
-
-kubectl get services podinfo
-kubectl get endpoints podinfo
-
+# make requests
 dig podinfo.default.svc.cluster.local 
 curl podinfo.default.svc.cluster.local
 
-https://github.com/chrisguest75/ckad/tree/master/02_services
-
-
+# Install apache bench to stress it.
 apt-get install apache2-utils -y
 ab -n 1000 -c 100 http://podinfo.default.svc.cluster.local/env
 ab -n 10000 -c 1000 http://podinfo.default.svc.cluster.local/delay/5
-
 ```
 
 ## Cleanup
 ```sh
 helm delete my-metrics  
+# kill the cluster
 kind delete cluster --name mykind 
 ```
 
-## Troubleshooting
+## Troubleshooting Metrics Server
 ```sh
 kubectl get all
 kubectl get pods --all-namespaces        
@@ -98,7 +99,5 @@ kubectl logs $POD -n default
 # Resources 
 * Example of using HPA
  https://javamana.com/2021/06/20210618115631001y.html
+* Podinfo [here](https://github.com/stefanprodan/podinfo)
 
-https://github.com/stefanprodan/podinfo
-
- helm repo add podinfo https://stefanprodan.github.io/podinfo
