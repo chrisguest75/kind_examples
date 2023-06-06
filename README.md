@@ -14,7 +14,6 @@ A repo for examples of Kubernetes features using Kind as a cluster
 * Services
 * Sidecar
 * Stateful set
-* Skaffold
 * Create a CRD
 * Metrics export
 * Namespaces and RBAC
@@ -43,7 +42,7 @@ kubectl explain deployment.spec.template.spec.containers
 Demonstrates how to build a cluster using kind  
 [README.md](01_creation/README.md)
 
-## 03 Deploy_Pod
+## 03 deploy pods
 
 Demonstrates how to deploy a simple hello world pod  
 [README.md](03_deploy_pod/README.md)
@@ -53,7 +52,7 @@ Demonstrates how to deploy a simple hello world pod
 Demonstrates how to deploy a simple hello world deployment  
 [README.md](04_deployments/README.md)
 
-## 05 simple_helm3
+## 05 simple helm3
 
 Demonstrates how to use helm3 to create and deploy a simple deployment.  
 [README.md](05_simple_helm3/README.md)
@@ -75,7 +74,7 @@ Demonstrates how to configure skaffold to work with kind
 
 ## 09 hpa
 
-Demonstrate how to use the HPA for scaling.
+Demonstrate how to use the HPA for scaling.  
 [README.md](09_hpa/README.md)
 
 ## 10 flux
