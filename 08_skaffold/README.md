@@ -1,4 +1,5 @@
 # README
+
 Demonstrates how to configure skaffold to work with kind  
 
 [skaffold.dev](https://skaffold.dev/)  
@@ -6,20 +7,25 @@ Demonstrates how to configure skaffold to work with kind
 Working with [local-cluster](https://skaffold.dev/docs/environment/local-cluster/)  
 
 ## Install Skaffold
-Ensure that skaffold is installed 
+
+Ensure that skaffold is installed
+
 ```sh
 brew install skaffold
 ```
 
 ## Build and Test Locally
-Build and test the image
+
+Build and test the image  
+
 ```sh
 docker build -t test .        
 docker run -it --rm --name test test 
 docker stop test
 ```
 
-## Prepare skaffold 
+## Prepare skaffold
+
 ```sh
 # Create a deployment then call init
 skaffold init        

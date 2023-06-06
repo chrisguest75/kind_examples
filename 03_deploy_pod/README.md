@@ -1,7 +1,8 @@
 # README.md
-Demonstrates how to deploy a simple hello world pod 
 
-Documentation for the pods resources
+Demonstrates how to deploy a simple hello world pod  
+
+Documentation for the pods resources 
 [docs](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#pod-v1-core)
 
 ```sh
@@ -26,6 +27,7 @@ kubectl delete pod testubuntu
 ```
 
 ## Creation
+
 ```sh
 # Create a pod
 kubectl create -f ./pod.yaml
@@ -36,6 +38,7 @@ kubectl logs myapp-pod
 ```
 
 ## Removal
+
 ```sh
 kubectl delete pods myapp-pod
 ```

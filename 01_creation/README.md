@@ -1,7 +1,9 @@
 # README
+
 Demonstrates how to build a cluster using Kind
 
-## Simple Example 
+## Simple Example
+
 ```sh
 # Create the cluster
 kind create cluster --name mykind --wait 1m  
@@ -35,6 +37,7 @@ kubectl cluster-info --context kind-mykind
 ```
 
 ### Examine the cluster
+
 ```sh
 # Look at running pods
 kubectl get pods --all-namespaces
@@ -44,6 +47,7 @@ kubectl api-resources
 ```
 
 ### Remove Cluster
+
 ```sh
 kind delete cluster --name mykind 
 ```
@@ -59,6 +63,7 @@ kind create cluster --config 3node_cluster.yaml --name mykind
 ```
 
 ## Enable ephermeral containers
+
 ```sh
 kind create cluster --config featuregate_cluster.yaml --name mykind
 ```

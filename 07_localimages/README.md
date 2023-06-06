@@ -1,8 +1,11 @@
 # README.md
+
 Demonstrates how to deploy a simple pod from a local image  
 
 ## Build and Test Locally
-Build and test the image
+
+Build and test the image  
+
 ```sh
 docker build -t localtest .        
 docker run -it --rm --name localtest localtest 
@@ -32,7 +35,8 @@ kubectl delete pod localtest
 kubectl get pods --all-namespaces 
 ```
 
-## Troubleshooting images 
+## Troubleshooting images
+
 ```sh
 # look at pod events.
 kubectl describe pod localtest
@@ -46,5 +50,3 @@ docker exec -it mykind-control-plane bash
 # list images loaded
 crictl images
 ```
-
-
