@@ -81,3 +81,8 @@ Demonstrate how to use the HPA for scaling.
 
 Demonstrate how to get flux running on a cluster  
 [README.md](10_flux/README.md)
+
+## 11 ingress
+
+Demonstrates how to install an ingress controller on kind  
+[README.md](11_ingress/README.md)
