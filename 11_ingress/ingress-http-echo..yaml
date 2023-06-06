@@ -46,20 +46,29 @@ spec:
   # Default port used by the image
   - port: 5678
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
 spec:
   rules:
   - http:
       paths:
-      - path: /foo
+      - pathType: Prefix
+        path: /foo
         backend:
-          serviceName: foo-service
-          servicePort: 5678
-      - path: /bar
+          service:
+            name: foo-service
+            port: 
+              number: 5678
+      - pathType: Prefix
+        path: /bar
         backend:
-          serviceName: bar-service
-          servicePort: 5678
+          service:
+            name: bar-service
+            port: 
+              number: 5678
 ---

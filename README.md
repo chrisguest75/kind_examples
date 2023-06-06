@@ -62,11 +62,6 @@ Demonstrates how to use helm3 to create and deploy a simple deployment.
 Demonstrate how to share a local volume into a container on Kind  
 [README.md](06_volumes/README.md)
 
-## 06 ingress
-
-Demonstrates how to install an ingress controller on kind  
-[README.md](06_ingress/README.md)
-
 ## 07 localimages
 
 Demonstrates how to deploy a simple pod from a local image  
@@ -86,3 +81,8 @@ Demonstrate how to use the HPA for scaling.
 
 Demonstrate how to get flux running on a cluster  
 [README.md](10_flux/README.md)
+
+## 11 ingress
+
+Demonstrates how to install an ingress controller on kind  
+[README.md](11_ingress/README.md)
