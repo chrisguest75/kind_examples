@@ -62,6 +62,13 @@ helm rollback hello-world
 helm history hello-world
 ```
 
+## Troubleshooting
+
+```sh
+# pull the values.yaml back from a revision
+helm get values hello-world --revision 2 -a
+```
+
 ## Remove
 
 ```sh
