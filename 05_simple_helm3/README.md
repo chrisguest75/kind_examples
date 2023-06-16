@@ -61,6 +61,13 @@ helm rollback hello-world --namespace hello-world
 helm history hello-world --namespace hello-world
 ```
 
+## Remove
+
+```sh
+# uninstall the chart
+helm uninstall hello-world --namespace hello-world
+```
+
 ## Troubleshooting
 
 Extract the values from a deployment.  
@@ -70,11 +77,29 @@ Extract the values from a deployment.
 helm get values hello-world --namespace hello-world --revision 2 -a
 ```
 
-## Remove
+Diffing two rendered charts.  
 
 ```sh
-# uninstall the chart
-helm uninstall hello-world --namespace hello-world
+# show charts
+helm list --namespace kube-system
+# show histroy
+helm history my-ingress-nginx --namespace kube-system
+
+# pull the chart versions locally
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm pull ingress-nginx/ingress-nginx --version 3.31.0 --untar
+helm pull ingress-nginx/ingress-nginx --version 4.0.1 --untar
+
+# extract values 
+helm get values my-ingress-nginx --namespace kube-system --all >  ./ingress-nginx-3.31.0/actual-values.yaml 
+
+# compoare
+bcompare ingress-nginx-3.31.0 ingress-nginx-4.0.1   
+
+# export a rendered template for th chart
+helm template my-ingress-nginx ./ingress-nginx-4.0.1 -f ./ingress-nginx-4.0.1/actual-values.yaml --namespace default > ingress-nginx-4.0.1.yaml
+helm template my-ingress-nginx ./ingress-nginx-3.31.0 -f ./ingress-nginx-3.31.0/actual-values.yaml --namespace default > ingress-nginx-3.31.0.yaml
 ```
 
 ## Resources
