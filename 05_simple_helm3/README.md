@@ -88,18 +88,22 @@ helm history my-ingress-nginx --namespace kube-system
 # pull the chart versions locally
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
-helm pull ingress-nginx/ingress-nginx --version 3.31.0 --untar
-helm pull ingress-nginx/ingress-nginx --version 4.0.1 --untar
+mkdir -p ./charts
+export CHART_VERSION=3.31.0
+export CHART_VERSION=4.0.1
+export CHART_VERSION=4.7.0
+helm pull ingress-nginx/ingress-nginx --version ${CHART_VERSION} --untar --untardir ./charts/ingress-nginx-${CHART_VERSION}
 
-# extract values 
-helm get values my-ingress-nginx --namespace kube-system --all >  ./ingress-nginx-3.31.0/actual-values.yaml 
+# extract values (this has to be an actual deployment on the cluster)
+# the version of the values will be for the chart version installed
+helm get values my-ingress-nginx --namespace kube-system --all > ./charts/ingress-nginx-${CHART_VERSION}/actual-values.yaml 
 
-# compoare
+# compare folders
 bcompare ingress-nginx-3.31.0 ingress-nginx-4.0.1   
 
-# export a rendered template for th chart
-helm template my-ingress-nginx ./ingress-nginx-4.0.1 -f ./ingress-nginx-4.0.1/actual-values.yaml --namespace default > ingress-nginx-4.0.1.yaml
-helm template my-ingress-nginx ./ingress-nginx-3.31.0 -f ./ingress-nginx-3.31.0/actual-values.yaml --namespace default > ingress-nginx-3.31.0.yaml
+# export a rendered template for the chart
+# copy the actual-values.yaml from the installed chart
+helm template my-ingress-nginx ./charts/ingress-nginx-${CHART_VERSION}/ingress-nginx -f ./charts/ingress-nginx-${CHART_VERSION}/actual-values.yaml --namespace default > ./charts/ingress-nginx-${CHART_VERSION}.yaml
 ```
 
 ## Resources
