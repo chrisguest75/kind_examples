@@ -5,26 +5,23 @@ A repo for examples of Kubernetes features using Kind as a cluster
 
 ## TODO
 
-* Helm3
 * Add a queue simple service and chart
-* Kustomize example.
-* Local docker desktop registry access
-* Build clusters
 * Publishing images
 * Services
 * Sidecar
 * Stateful set
 * Create a CRD
 * Metrics export
-* Namespaces and RBAC
 * Fluentd
 * Open census
+* Github actions with kuttl
 
 ## Installation
 
 ```sh
 kind version
-kind v0.7.0 go1.12.5 darwin/amd64
+# last worked on
+kind v0.20.0 go1.20.5 darwin/amd64
 ```
 
 ## Tools
