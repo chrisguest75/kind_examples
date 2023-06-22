@@ -1,6 +1,10 @@
 # README
 
-Demonstrates how to use helm3 to create and deploy a simple deployment.  
+Demonstrates how to use helm3 to create, deploy and compare a simple chart.  
+
+NOTES:
+
+* Use artifacthub [here](https://artifacthub.io/) to look at data on charts.  
 
 ## Prerequisites
 
@@ -79,6 +83,13 @@ helm get values hello-world --namespace hello-world --revision 2 -a
 
 Diffing two rendered charts.  
 
+Other examples:
+
+* [EXTERNAL-DNS.md](./EXTERNAL-DNS.md)
+* [SECRETS-STORE-CSI-DRIVER-PROVIDER-AWS.md](./SECRETS-STORE-CSI-DRIVER-PROVIDER-AWS.md)
+* [SECRETS-STORE-CSI-DRIVER.md](./SECRETS-STORE-CSI-DRIVER.md)
+* [PODINFO.md](./PODINFO.md)
+
 ```sh
 # show charts
 helm list --namespace kube-system
@@ -100,7 +111,13 @@ helm get values my-ingress-nginx --namespace kube-system --all > ./charts/ingres
 
 # compare folders
 bcompare ingress-nginx-3.31.0 ingress-nginx-4.0.1   
+```
 
+## Render
+
+Render the charts as a single file so they can be easily diffed and reviewed.  
+
+```sh
 # export a rendered template for the chart
 # copy the actual-values.yaml from the installed chart
 helm template my-ingress-nginx ./charts/ingress-nginx-${CHART_VERSION}/ingress-nginx -f ./charts/ingress-nginx-${CHART_VERSION}/actual-values.yaml --namespace default > ./charts/ingress-nginx-${CHART_VERSION}.yaml
@@ -109,3 +126,4 @@ helm template my-ingress-nginx ./charts/ingress-nginx-${CHART_VERSION}/ingress-n
 ## Resources
 
 * Helm [here](https://helm.sh/)  
+* artifacthub [here](https://artifacthub.io/)  
