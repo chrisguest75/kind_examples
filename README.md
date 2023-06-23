@@ -3,19 +3,6 @@
 A repo for examples of Kubernetes features using Kind as a cluster  
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
-## TODO
-
-* Add a queue simple service and chart
-* Publishing images
-* Services
-* Sidecar
-* Stateful set
-* Create a CRD
-* Metrics export
-* Fluentd
-* Open census
-* Github actions with kuttl
-
 ## Installation
 
 ```sh
