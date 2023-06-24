@@ -1,0 +1,27 @@
+name: Create Cluster
+
+on: pull_request
+
+jobs:
+    
+  create-cluster:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2    
+
+      - name: Create k8s Kind Cluster
+        uses: helm/kind-action@v1.7.0
+        with:
+          config: .github/configs/1node_cluster.yaml
+
+      - name: versions
+        run: |
+          kubectl version
+          helm version
+          docker version
+          docker info
+          kind version
+
+
+
