@@ -15,8 +15,13 @@ jobs:
         with:
           config: .github/configs/1node_cluster.yaml
 
-      - name: kubectl version
+      - name: versions
         run: |
           kubectl version
+          helm version
+          docker version
+          docker info
+          kind version
+
 
 
