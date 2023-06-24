@@ -9,11 +9,18 @@ A repo for examples of Kubernetes features using Kind as a cluster
 kind version
 # last worked on
 kind v0.20.0 go1.20.5 darwin/amd64
+
+brew install kind
 ```
 
 ## Tools
 
 kubectx and kubens - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
+
+```sh
+brew install kubectx
+brew install kubens
+```
 
 ## Describing Resources
 
