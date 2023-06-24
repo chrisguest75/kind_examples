@@ -9,7 +9,6 @@ jobs:
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.7.0
         with:
-          name: kind
           config: .github/workflows/1node-cluster.yaml
       - name: Install Helm
         run: |
