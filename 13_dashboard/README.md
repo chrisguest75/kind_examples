@@ -62,7 +62,9 @@ open https://localhost:8443
 ### Remove Cluster
 
 ```sh
-kind delete cluster --name mykind-dashboard
+kind get clusters   
+
+kind delete -v 10 cluster --name dashboard
 
 kubectx -d kind-mydashboard  
 ```
