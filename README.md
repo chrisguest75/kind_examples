@@ -28,6 +28,11 @@ brew install kubens
 kubectl explain deployment.spec.template.spec.containers
 ```
 
+## Actions
+
+Demonstrate using kind cluster in ci pipeline.  
+[README.md](.github/WORKFLOWS.md)  
+
 ## 01 Creation
 
 Demonstrates how to build a cluster using kind  
