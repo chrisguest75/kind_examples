@@ -1,0 +1,19 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: versions-test
+  name: developer-role
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "services", "pods"]
+  verbs: ["create", "get", "update", "delete", "list", "watch"]
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: versions-test
+  name: operator-role
+rules:
+- apiGroups: [""]
+  resources: ["persistentvolumes", "secrets", "configmaps"]
+  verbs: ["create", "get", "update", "delete", "list", "watch"]
