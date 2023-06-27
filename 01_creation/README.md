@@ -89,6 +89,9 @@ kubectl api-versions
 ### Remove Cluster
 
 ```sh
+# get names
+kind get clusters
+# delete a cluster
 kind delete cluster --name mykind 
 ```
 
