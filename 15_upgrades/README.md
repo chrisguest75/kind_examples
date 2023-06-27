@@ -32,7 +32,7 @@ kubectl get Role,RoleBindings -n versions-test -o yaml | yq .
 ```sh
 mkdir -p ./out
 # 
-kubectl get --all-namespaces $(kubectl api-resources --no-headers | awk '{print $1}' | tr '\n' ',' | sed s/,\$//) -o json | jq -c '.items[] | [.apiVersion, .metadata.name, .metadata.namespace]' > ./out/1-21-manifest.json
+kubectl get --all-namespaces $(kubectl api-resources --no-headers | awk '{print $1}' | tr '\n' ',' | sed s/,\$//) -o json | jq -c '.items[] | [.apiVersion, .kind, .metadata.name, .metadata.namespace]' > ./out/1-21-manifest.json
 ```
 
 ## Kubepug
