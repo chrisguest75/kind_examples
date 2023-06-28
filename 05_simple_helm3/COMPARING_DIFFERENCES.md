@@ -113,6 +113,16 @@ export REPOSITORY_URL=https://aws.github.io/secrets-store-csi-driver-provider-aw
 export CHART_VERSION=0.3.3
 ```
 
+## PROMETHEUS
+
+
+```sh
+export CHART_REPOSITORY=prometheus-community
+export CHART_NAME=kube-prometheus-stack
+export REPOSITORY_URL=https://prometheus-community.github.io/helm-charts
+export CHART_VERSION=47.0.0
+```
+
 ## PULLING, RENDERING & DIFFING
 
 ### Pulling
@@ -162,3 +172,4 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 * secrets-store-csi-driver-provider-aws repo [here](https://github.com/aws/secrets-store-csi-driver-provider-aws)
 * secrets-store-csi-driver-provider-aws [here](https://aws.github.io/secrets-store-csi-driver-provider-aws/)  
 * https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+* https://artifacthub.io/packages/helm/prometheus-community/prometheus
