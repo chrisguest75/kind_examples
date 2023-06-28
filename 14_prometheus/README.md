@@ -104,11 +104,9 @@ kubectx -d kind-myprometheus
 * https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md
 * prometheus-community/helm-charts [here](https://github.com/prometheus-community/helm-charts)
 
-https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
-
-https://github.com/kubernetes/kube-state-metrics
-
-https://hub.kubeapps.com/charts/prometheus-community/kube-state-metrics
+* https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
+* https://github.com/kubernetes/kube-state-metrics
+* https://hub.kubeapps.com/charts/prometheus-community/kube-state-metrics
 
 
 
