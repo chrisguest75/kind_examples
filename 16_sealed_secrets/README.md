@@ -5,8 +5,9 @@ Sealed Secrets are "one-way" encrypted K8s Secrets that can be created by anyone
 ## NOTES
 
 * Works in a similar way to SOPS in that you create the encoded secret then store in decrypted form on the server.  
-* When uninstalling the chart it seems to leave resources on the cluster
-* Copying a sealed secret and changing the resource names does not work - the secret never gets decrypted even though the sealedsecret resource is created.  
+* When uninstalling the chart it seems to leave the secret key resources on the cluster.  This helps with upgrades.  
+* Copying a sealed secret and changing the resource name does not work - the secret never gets decrypted even though the sealedsecret resource is created.  
+* 
 
 ## TODO
 
@@ -118,8 +119,15 @@ kubectl get secret secret3 -o yaml
 ## Troubleshooting
 
 ```sh
+# list all the sealed secrets
+kubectl get sealedsecrets --all-namespaces
+
 # if there are any errors you can get the logs of the sealed secrets pod.  
 kubectl logs sealed-secrets-6ffb6d7979-vbzn7
+
+# check the expiry time of the certificate
+./kubeseal/kubeseal-0.22.0-darwin-amd64/kubeseal -n kube-system --fetch-cert --controller-name sealed-secrets > mycert.pem    
+openssl x509 -in mycert.pem -noout -dates   
 ```
 
 ### Remove Cluster
