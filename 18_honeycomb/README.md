@@ -59,9 +59,15 @@ export APIKEY=xxxxxxxxxxxxxxxxxxxx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
 ```
 
-## Install Dashboards
+## Install Honeycomb Dashboards
 
 Install kubernetes_starter_pack [README.md](kubernetes_starter_pack/README.md)  
+
+## Install Services
+
+### Podinfo
+
+Install podinfo [README.md](../17_podinfo/README.md)  
 
 ## Resources
 
