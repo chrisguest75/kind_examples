@@ -2,7 +2,7 @@
 
 TODO:
 
-* install podinfo
+* create a pod that fails
 
 ## Clusters
 
@@ -68,6 +68,35 @@ Install kubernetes_starter_pack [README.md](kubernetes_starter_pack/README.md)
 ### Podinfo
 
 Install podinfo [README.md](../17_podinfo/README.md)  
+
+```sh
+open http://0.0.0.0:9898
+
+# panic does not seem to get picked up 
+open http://0.0.0.0:9898/panic
+
+```
+
+### NGINX
+
+```sh
+kubectl apply -f ./nginx.yaml
+kubectl apply -f ./failed.yaml
+
+
+kubectl delete -f ./nginx.yaml
+kubectl delete -f ./failed.yaml
+```
+
+## Remove Cluster
+
+```sh
+kind get clusters   
+
+kind delete -v 10 cluster --name kind-1-21
+
+kubectx -d kind-1-21  
+```
 
 ## Resources
 

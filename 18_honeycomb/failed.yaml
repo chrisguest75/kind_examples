@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: failed01
+  labels:
+    app.kubernetes.io/name: failed
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: failed
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: failed
+    spec:
+      containers:
+      - name: failed
+        image: failed01:9.99.9
+        ports:
+        - containerPort: 80
