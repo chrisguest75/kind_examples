@@ -1,5 +1,9 @@
 # HONEYCOMB
 
+TODO:
+
+* install podinfo
+
 ## Clusters
 
 Create a versioned single node cluster.  
@@ -55,13 +59,15 @@ export APIKEY=xxxxxxxxxxxxxxxxxxxx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
 ```
 
+## Install Dashboards
+
+Install kubernetes_starter_pack [README.md](kubernetes_starter_pack/README.md)  
 
 ## Resources
 
 * artifacthub honeycomb [here](https://artifacthub.io/packages/helm/honeycomb/honeycomb)
 * terraform-honeycombio-kubernetes-starter-pack repo [here](https://github.com/honeycombio/terraform-honeycombio-kubernetes-starter-pack)
-* https://docs.honeycomb.io/integrations/kubernetes/honeycomb-kubernetes-agent/
-* https://docs.honeycomb.io/integrations/kubernetes/
-* https://www.honeycomb.io/blog/diving-into-kubernetes-clusters-with-honeycomb
-* https://opentelemetry.io/docs/k8s-operator/
-
+* Honeycomb Kubernetes Agent [here](https://docs.honeycomb.io/integrations/kubernetes/honeycomb-kubernetes-agent/)
+* Kubernetes and Honeycomb [here](https://docs.honeycomb.io/integrations/kubernetes/)
+* Resolving High CPU Usage in Kubernetes With Honeycomb [here](https://www.honeycomb.io/blog/diving-into-kubernetes-clusters-with-honeycomb)
+* OpenTelemetry Operator for Kubernetes [here](https://opentelemetry.io/docs/k8s-operator/)
