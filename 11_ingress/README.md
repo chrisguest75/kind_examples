@@ -35,11 +35,11 @@ kubectl wait --namespace ingress-nginx \
 ```sh
 # create 1 or the other
 kubectl apply -f ./ingress-agnhost.yaml 
-kubectl apply -f ./ingress-http-echo..yaml
+kubectl apply -f ./ingress-http-echo.yaml
 
 # once tested you can remove either of them
 kubectl delete -f ./ingress-agnhost.yaml 
-kubectl delete -f ./ingress-http-echo..yaml
+kubectl delete -f ./ingress-http-echo.yaml
 ```
 
 ## Test ingress

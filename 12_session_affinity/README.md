@@ -68,11 +68,9 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 ## Install
 
 ```sh
-helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ${CHART_NAME} --repo ${REPOSITORY_URL} --namespace ${CHART_NAME} --create-namespace
 
-kubectl get pods --all-namespaces      
-
-
+kubectl get pods --all-namespaces
 
 helm show values ingress-nginx --repo https://kubernetes.github.io/ingress-nginx
 
@@ -84,18 +82,7 @@ kubectl wait --namespace ingress-nginx \
   --timeout=120s
 
 
-kubectl create deployment demo --image=httpd --port=80
-kubectl expose deployment demo
 
-kubectl create ingress demo-localhost --class=nginx \
-  --rule="demo.localdev.me/*=demo:80"
-
-kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
-
-
-curl --resolve demo.localdev.me:8080:127.0.0.1 http://demo.localdev.me:8080
-
-curl http://127.0.0.1:8080
 ```
 
 ## Remove Cluster

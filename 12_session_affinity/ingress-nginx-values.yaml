@@ -79,7 +79,7 @@ controller:
   ## Disabled by default
   hostPort:
     # -- Enable 'hostPort' or not
-    enabled: false
+    enabled: true
     ports:
       # -- 'hostPort' http port
       http: 80
@@ -122,7 +122,7 @@ controller:
   # node or nodes where an ingress controller pod is running.
   publishService:
     # -- Enable 'publishService' or not
-    enabled: true
+    enabled: false
     # -- Allows overriding of the publish service to bind to
     # Must be <namespace>/<service_name>
     pathOverride: ""
