@@ -12,6 +12,7 @@ export CHART_REPOSITORY=podinfo
 export CHART_NAME=podinfo
 export REPOSITORY_URL=https://stefanprodan.github.io/podinfo
 export CHART_VERSION=5.2.1
+export CHART_VERSION=6.3.6
 ```
 
 ## AWS-VPC-CNI
