@@ -1,5 +1,7 @@
 # PODINFO
 
+Podinfo Helm chart for Kubernetes  
+
 TODO:
 
 * Add ingress

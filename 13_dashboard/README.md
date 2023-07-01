@@ -1,5 +1,7 @@
 # INSTALL DASHBOARD
 
+Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters. It allows users to manage applications running in the cluster and troubleshoot them, as well as manage the cluster itself.  
+
 TODO:
 
 * The metrics scraper does not seem to work
@@ -71,6 +73,8 @@ kubectx -d kind-mydashboard
 
 ## Resources
 
+* Kubernetes Dashboard repo [here](https://github.com/kubernetes/dashboard)  
+* artifacthub k8s-dashboard [here](https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard)  
 * Accessing Dashboard [here](https://github.com/kubernetes/dashboard/blob/master/docs/user/accessing-dashboard/README.md)  
 * Kubernetes Dashboard - Internal error (500): Not enough data to create auth info structure [here](https://stackoverflow.com/questions/70287656/kubernetes-dashboard-internal-error-500-not-enough-data-to-create-auth-info)  
 * Creating admin user to access Kubernetes dashboard [here](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4)

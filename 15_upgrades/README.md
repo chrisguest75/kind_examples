@@ -1,6 +1,6 @@
 # UPGRADES
 
-Demonstrate upgrades wih examples.  
+Demonstrate Kubernetes upgrades wih examples.  
 
 TODO:
 

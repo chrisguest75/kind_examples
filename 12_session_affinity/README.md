@@ -1,6 +1,6 @@
 # SESSION AFFINITY
 
-Create an example that uses the official ingress-nginx with session affinity
+Create an example that uses the official `ingress-nginx` with session affinity  
 
 TODO:
 
