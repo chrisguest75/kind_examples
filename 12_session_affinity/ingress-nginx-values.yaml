@@ -60,7 +60,7 @@ controller:
   # -- Process Ingress objects without ingressClass annotation/ingressClassName field
   # Overrides value for --watch-ingress-without-class flag of the controller binary
   # Defaults to false
-  watchIngressWithoutClass: false
+  watchIngressWithoutClass: true
   # -- Process IngressClass per name (additionally as per spec.controller).
   ingressClassByName: false
   # -- This configuration enables Topology Aware Routing feature, used together with service annotation service.kubernetes.io/topology-aware-hints="auto"
@@ -152,9 +152,8 @@ controller:
   maxmindLicenseKey: ""
   # -- Additional command line arguments to pass to Ingress-Nginx Controller
   # E.g. to specify the default SSL certificate you can use
-  extraArgs: {}
-  ## extraArgs:
-  ##   default-ssl-certificate: "<namespace>/<secret_name>"
+  extraArgs:
+    publish-status-address: "localhost"
 
   # -- Additional environment variables to set
   extraEnvs: []
@@ -191,11 +190,13 @@ controller:
   # -- Node tolerations for server scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
-  tolerations: []
-  #  - key: "key"
-  #    operator: "Equal|Exists"
-  #    value: "value"
-  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+  tolerations: 
+   - key: "node-role.kubernetes.io/master"
+     operator: "Equal"
+     effect: "NoSchedule"
+   - key: "node-role.kubernetes.io/control-plane"
+     operator: "Equal"
+     effect: "NoSchedule"
 
   # -- Affinity and anti-affinity rules for server scheduling to nodes
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -260,6 +261,7 @@ controller:
   ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
   nodeSelector:
+    ingress-ready: "true"
     kubernetes.io/os: linux
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
@@ -454,8 +456,8 @@ controller:
     targetPorts:
       http: http
       https: https
-    type: LoadBalancer
-    ## type: NodePort
+    #type: LoadBalancer
+    type: NodePort
     ## nodePorts:
     ##   http: 32080
     ##   https: 32443
