@@ -72,18 +72,36 @@ helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ${CHART_NAME
 
 kubectl get pods --all-namespaces
 
-helm show values ingress-nginx --repo https://kubernetes.github.io/ingress-nginx
-
 kubectl get pods --namespace=ingress-nginx
 
 kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=120s
-
-
-
 ```
+
+## PODINFO
+
+Podinfo Helm chart for Kubernetes  
+
+```sh
+# add repo
+export CHART_REPOSITORY=podinfo
+export CHART_NAME=podinfo
+export REPOSITORY_URL=https://stefanprodan.github.io/podinfo
+export CHART_VERSION=6.3.6
+
+
+helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ${CHART_NAME} --repo ${REPOSITORY_URL} --namespace ${CHART_NAME} --create-namespace
+```
+
+## Test ingress
+
+```sh
+# should output "foo"
+curl http://127.0.0.1:8080/
+```
+
 
 ## Remove Cluster
 
