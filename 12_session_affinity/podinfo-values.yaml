@@ -1,6 +1,6 @@
 # Default values for podinfo.
 
-replicaCount: 1
+replicaCount: 5
 logLevel: info
 host: #0.0.0.0
 backend: #http://backend-podinfo:9898/echo
@@ -103,12 +103,14 @@ securityContext: {}
 
 ingress:
   enabled: true
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  className: "nginx"
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/upstream-hash-by: '$uri'
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: podinfo.local
+    - host: localhost
       paths:
         - path: /
           pathType: ImplementationSpecific
