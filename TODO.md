@@ -1,5 +1,7 @@
 # TODO
 
+* Add OIDC keycloak or something.  
+* Share AWS creds into Kind
 * Add a queue simple service and chart
 * Publishing images
 * Services

@@ -83,12 +83,7 @@ helm get values hello-world --namespace hello-world --revision 2 -a
 
 Diffing two rendered charts.  
 
-Other examples:
-
-* [EXTERNAL-DNS.md](./EXTERNAL-DNS.md)
-* [SECRETS-STORE-CSI-DRIVER-PROVIDER-AWS.md](./SECRETS-STORE-CSI-DRIVER-PROVIDER-AWS.md)
-* [SECRETS-STORE-CSI-DRIVER.md](./SECRETS-STORE-CSI-DRIVER.md)
-* [PODINFO.md](./PODINFO.md)
+Other examples can be found in [COMPARING-DIFFERENCES.md](./COMPARING-DIFFERENCES.md)
 
 ```sh
 # show charts

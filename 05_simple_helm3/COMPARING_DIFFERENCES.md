@@ -2,6 +2,16 @@
 
 Downloading and comparing helm charts before releasing them onto a cluster.  
 
+NOTES:
+
+* Examples of downloading charts locally.  
+* Examples of rendering charts locally using values files.  
+* Examples of splitting charts into resources for diffing.  
+
+## Reason
+
+When upgrading charts it's necessary to compare the latest version with the existing version to understand the changes.  
+
 ## PODINFO
 
 Podinfo Helm chart for Kubernetes  
@@ -146,6 +156,32 @@ cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${
 helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
 ```
 
+## Spliting chart into resources
+
+Sometimes it's easier to split the chart into individual resources to perform a folder diff.  
+
+For a simple diff of resources by name and kind.  
+
+```sh
+# create output folder
+mkdir -p ./out
+
+# export object names and kinds.  
+cat ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml | yq ". | [.apiVersion, .kind, .metadata.name]" > ./out/chart-names.yaml
+```
+
+To split the charts into resources.  
+
+```sh
+helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./${CHART_NAME}-values.yaml --namespace ingress-nginx > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
+
+# split chart into files
+mkdir -p ./out/${CHART_NAME}
+cd ./out/${CHART_NAME}
+cat ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml | yq -P 'sort_keys(..)' -s '"resource_" + .kind + "_" + .metadata.name'
+cd ../..
+```
+
 ## Resources
 
 * artifacthub sealed-secrets [here](https://artifacthub.io/packages/helm/bitnami-labs/sealed-secrets)  
@@ -162,4 +198,4 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 * artifacthub secrets-store-csi-driver [here](https://artifacthub.io/packages/helm/secret-store-csi-driver/secrets-store-csi-driver)  
 * secrets-store-csi-driver-provider-aws repo [here](https://github.com/aws/secrets-store-csi-driver-provider-aws)
 * secrets-store-csi-driver-provider-aws [here](https://aws.github.io/secrets-store-csi-driver-provider-aws/)  
-* https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+* ingress-nginx [here](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx)  
