@@ -103,6 +103,9 @@ helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ${CHART_NAME
 
 # CHECK HOSTNAME IS ALWAYS THE SAME.
 curl http://localhost:8080/
+
+# remove chart
+helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}
 ```
 
 ## Compare with ingress chart
