@@ -154,7 +154,6 @@ kubectx -d kind-myingress
 
 ## Resources
 
-* https://github.com/kubernetes/ingress-nginx
-* https://kubernetes.github.io/ingress-nginx/deploy/
-* https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
-* https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/#config-file
+* kubernetes/ingress-nginx repo [here](https://github.com/kubernetes/ingress-nginx)
+* Ingress-Nginx Controller Installation Guide [here](https://kubernetes.github.io/ingress-nginx/deploy/)
+* Ingress-Nginx Controller Quick Start [here](https://kubernetes.github.io/ingress-nginx/deploy/#quick-start)
