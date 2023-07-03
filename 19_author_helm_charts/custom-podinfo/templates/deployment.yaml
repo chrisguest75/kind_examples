@@ -37,6 +37,12 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          command:
+            - ./podinfo 
+            {{- range .Values.backends }}
+            - --backend-url={{ . }}
+            {{- end }}            
+
           livenessProbe:
             exec:
               command:

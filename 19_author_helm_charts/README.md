@@ -2,7 +2,7 @@
 
 TODO:
 
-* Upload to docker registry
+* Upload chart to docker registry and source it from there.  
 
 ## Author
 
@@ -53,7 +53,7 @@ helm template ${CHART_NAME} ./${CHART_NAME} -f ./${CHART_NAME}-values.yaml --nam
 export INSTALL_NUMBER=1
 export INSTALL_NUMBER=2
 
-helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME}-${INSTALL_NUMBER} ./${CHART_NAME} --namespace apps --create-namespace --set "ingress.hosts[0].paths[0].path=/custom-podinfo-${INSTALL_NUMBER},serviceAccount.name=custom-podinfo-${INSTALL_NUMBER}"
+helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME}-${INSTALL_NUMBER} ./${CHART_NAME} --namespace apps --create-namespace --set "ingress.hosts[0].paths[0].path=/custom-podinfo-${INSTALL_NUMBER},serviceAccount.name=custom-podinfo-${INSTALL_NUMBER},nameOverride=custom-podinfo-app-${INSTALL_NUMBER},fullnameOverride=custom-podinfo-chart-${INSTALL_NUMBER}"
 curl http://localhost:8080/custom-podinfo-${INSTALL_NUMBER}
 
 kubectl -n apps port-forward deploy/custom-podinfo-chart-${INSTALL_NUMBER} 8081:9898
@@ -62,14 +62,12 @@ open http://0.0.0.0:8081
 helm uninstall ${CHART_NAME}-${INSTALL_NUMBER} --namespace apps
 
 
-curl http://localhost:8080/custom-podinfo-1
-
+curl -H 'User-Agent: Chrome/114.0.0.0' -H 'Accept: text/html,application/xhtml+xml,application/xml' http://localhost:8080/custom-podinfo-1
+curl http://localhost:8080/custom-podinfo-2
 
 helm ls --all-namespaces 
 kubectl get events -n apps                    
 kubectl get pods --all-namespaces 
-
-
 ```
 
 ## Resources
