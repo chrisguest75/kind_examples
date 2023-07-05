@@ -2,10 +2,15 @@
 
 Podinfo Helm chart for Kubernetes  
 
+NOTES:
+
+* Quickly create multiple deyployments
+* Can be used with [18_honeycomb](../18_honeycomb/README.md) for monitoring failures
+
 TODO:
 
 * Add ingress
-* Add multiple deyployments
+* Work out how to monitor individual services from restarts, errimagepull, etc.
 
 ## Pulling
 
@@ -52,22 +57,42 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 # check the context
 kubectx
 # install
-helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME} --create-namespace
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-healthy --create-namespace
+
+kubectl get pods --all-namespaces
 ```
 
 ## Use
 
 ```sh
-kubectl -n podinfo port-forward deploy/podinfo 8080:9898
+kubectl -n ${CHART_NAME}-healthy port-forward deploy/podinfo 8080:9898
 
 open http://0.0.0.0:8080
+```
+
+## Injecting Failures
+
+```sh
+# install "the healthy state is never reached"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unhealthy --create-namespace --set "faults.unhealthy=true"
+
+# install "the ready state is never reached"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unready --create-namespace --set "faults.unready=true"
+
+# install "missing tag"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-missingtag --create-namespace --set "image.tag=100.100.100"
+
+# causes the healthy pods to crash (port-forward)
+open http://0.0.0.0:8080/panic
+
+kubectl get pods --all-namespaces
 ```
 
 ## Remove
 
 ```sh
 # uninstall the chart
-helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}
+helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}-healthy
 ```
 
 ## Resources

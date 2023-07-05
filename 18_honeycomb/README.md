@@ -2,7 +2,7 @@
 
 TODO:
 
-* create a pod that fails
+* Find some queries that allow me to alert on failing pods
 
 ## Clusters
 
@@ -10,6 +10,7 @@ Create a versioned single node cluster.
 
 ```sh
 kind create cluster --config 1node_1_21_cluster.yaml --name kind-1-21
+kind create cluster --config 1node_1_23_cluster.yaml --name kind-1-23
 ```
 
 ## Pulling
@@ -57,6 +58,8 @@ kubectx
 # install
 export APIKEY=xxxxxxxxxxxxxxxxxxxx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
+
+kubectl get pods --all-namespaces                 
 ```
 
 ## Install Honeycomb Dashboards
