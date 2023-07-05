@@ -20,6 +20,7 @@ export CHART_REPOSITORY=podinfo
 export CHART_NAME=podinfo
 export REPOSITORY_URL=https://stefanprodan.github.io/podinfo
 export CHART_VERSION=5.2.1
+# kube 1.23+
 export CHART_VERSION=6.3.6
 ```
 

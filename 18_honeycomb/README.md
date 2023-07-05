@@ -1,8 +1,14 @@
 # HONEYCOMB
 
+NOTES:
+
+* Ships logs to honeycomb
+* Ships node and pod metrics to honeycomb
+
 TODO:
 
 * Find some queries that allow me to alert on failing pods
+* Try otel collector.  
 
 ## Clusters
 
@@ -13,7 +19,7 @@ kind create cluster --config 1node_1_21_cluster.yaml --name kind-1-21
 kind create cluster --config 1node_1_23_cluster.yaml --name kind-1-23
 ```
 
-## Pulling
+## Pulling Honeycomb Agent
 
 ```sh
 export CHART_REPOSITORY=honeycomb
@@ -35,7 +41,7 @@ mkdir -p ./charts
 helm pull ${CHART_REPOSITORY}/${CHART_NAME} --version ${CHART_VERSION} --untar --untardir ./charts/${CHART_NAME}-${CHART_VERSION}
 ```
 
-## Render
+### Render Honeycomb Agent
 
 Render the charts as a single file so they can be easily diffed and reviewed.  
 
@@ -50,55 +56,40 @@ cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${
 helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
 ```
 
-## Install chart
+## Install Honeycomb Agent
 
 ```sh
 # check the context
 kubectx
 # install
+set -a
+. ./.env
+set +a
+# or
 export APIKEY=xxxxxxxxxxxxxxxxxxxx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
 
-kubectl get pods --all-namespaces                 
+kubectl get pods --all-namespaces
 ```
 
 ## Install Honeycomb Dashboards
 
-Install kubernetes_starter_pack [README.md](kubernetes_starter_pack/README.md)  
+Use terraform to install kubernetes_starter_pack dashboards [README.md](kubernetes_starter_pack/README.md)  
 
 ## Install Services
 
 ### Podinfo
 
-Install podinfo [README.md](../17_podinfo/README.md)  
-
-```sh
-open http://0.0.0.0:9898
-
-# panic does not seem to get picked up 
-open http://0.0.0.0:9898/panic
-
-```
-
-### NGINX
-
-```sh
-kubectl apply -f ./nginx.yaml
-kubectl apply -f ./failed.yaml
-
-
-kubectl delete -f ./nginx.yaml
-kubectl delete -f ./failed.yaml
-```
+Install injecting failures podinfo [README.md](../17_podinfo/README.md)  
 
 ## Remove Cluster
 
 ```sh
 kind get clusters   
 
-kind delete -v 10 cluster --name kind-1-21
+kind delete -v 10 cluster --name kind-1-23
 
-kubectx -d kind-1-21  
+kubectx -d kind-1-23
 ```
 
 ## Resources
@@ -109,3 +100,4 @@ kubectx -d kind-1-21
 * Kubernetes and Honeycomb [here](https://docs.honeycomb.io/integrations/kubernetes/)
 * Resolving High CPU Usage in Kubernetes With Honeycomb [here](https://www.honeycomb.io/blog/diving-into-kubernetes-clusters-with-honeycomb)
 * OpenTelemetry Operator for Kubernetes [here](https://opentelemetry.io/docs/k8s-operator/)
+* Collecting Kubernetes Data Using OpenTelemetry [here](https://www.honeycomb.io/blog/kubernetes-collector-opentelemetry)  
