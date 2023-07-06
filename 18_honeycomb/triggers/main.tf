@@ -64,14 +64,14 @@ resource "honeycombio_query" "backoffpullingimage" {
   EOT
 }
 
-resource "honeycombio_trigger" "example" {
+resource "honeycombio_trigger" "backoffpullingimage" {
   name        = "Test honeycombio_trigger in terraform"
   description = "Back-off pulling image"
 
   query_id = honeycombio_query.backoffpullingimage.id
   dataset  = var.dataset
 
-  frequency = 600 // in seconds, 2 minutes
+  frequency = 600 // in seconds, 10 minutes
 
   alert_type = "on_true" // on_change is default, on_true can refers to the "Alert on True" checkbox in the UI
 
