@@ -10,6 +10,7 @@ NOTES:
 TODO:
 
 * Load the apikey values from secrets.
+* Look at readiness values
 
 ## Pulling OTEL Collector
 
@@ -48,7 +49,31 @@ cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${
 helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml --namespace kube-system --set mode=daemonset > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
 ```
 
-## Install OTEL Collector
+## Install OTEL Collector (use secret)
+
+```sh
+# check the context
+kubectx
+# install
+set -a
+. ./.env
+set +a
+# or
+export APIKEY=xxxxxxxxxxxxxxxxxxxx
+
+kubectl create namespace ${CHART_NAME}     
+kubectl --namespace ${CHART_NAME} create secret generic honeycomb-apikey --from-literal=HONEYCOMB_APIKEY=${APIKEY}
+kubectl get secrets -n $CHART_NAME honeycomb-apikey -o yaml
+
+helm upgrade ${CHART_NAME}-daemonset --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-daemon-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data"
+
+helm upgrade ${CHART_NAME}-deployment --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-deployment-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data"
+
+kubectl get pods --all-namespaces
+kubectl -n ${CHART_NAME} get pods
+```
+
+## Install OTEL Collector (render apikey)
 
 ```sh
 # check the context
@@ -79,3 +104,4 @@ helm uninstall ${CHART_NAME}-deployment --namespace ${CHART_NAME}
 * Collecting Kubernetes Data Using OpenTelemetry [here](https://www.honeycomb.io/blog/kubernetes-collector-opentelemetry)  
 * open-telemetry/opentelemetry-operator repo [here](https://github.com/open-telemetry/opentelemetry-operator)  
 * artifacthub opentelemetry-collector Helm chart [here](https://artifacthub.io/packages/helm/opentelemetry-helm/opentelemetry-collector)  
+* Provide ability to Load an Existing Secret or Create a New Secret to Datadog. [here](https://github.com/open-telemetry/opentelemetry-helm-charts/issues/31)  

@@ -4,7 +4,7 @@ config:
     otlp:
       endpoint: "api.honeycomb.io:443"
       headers:
-        "X-Honeycomb-Team": "YOUR_API_KEY"
+        "X-Honeycomb-Team": "$HONEYCOMB_APIKEY"
         "X-Honeycomb-Dataset": "METRIC_DATASET_NAME"
   service:
     pipelines:
@@ -14,6 +14,14 @@ config:
         exporters: [ otlp ]
       logs:
         exporters: [ otlp ]
+
+extraEnvs:
+  - name: HONEYCOMB_APIKEY
+    valueFrom:
+      secretKeyRef:
+        name: honeycomb-apikey 
+        key: HONEYCOMB_APIKEY
+
 presets:
   kubernetesAttributes:
     enabled: true

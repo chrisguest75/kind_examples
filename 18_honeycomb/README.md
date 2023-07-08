@@ -3,7 +3,6 @@
 TODO:
 
 * Find some queries that allow me to alert on failing pods
-* Try otel collector.  
 
 ## Clusters
 
