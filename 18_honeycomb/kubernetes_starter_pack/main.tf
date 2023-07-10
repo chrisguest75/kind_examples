@@ -6,6 +6,12 @@ terraform {
   }
 }
 
+variable "dataset_name" {
+  type = string
+}
+
 module "explore-honeycombio-kubernetes-starter-pack" {
   source = "honeycombio/kubernetes-starter-pack/honeycombio"
+
+  dataset_name = var.dataset_name
 }

@@ -16,9 +16,9 @@ set +a
 
 terraform init
 
-terraform plan
+terraform plan --var-file=terraform.tfvars
 
-terraform apply -auto-approve   
+terraform apply --var-file=terraform.tfvars --auto-approve 
 ```
 
 ## Troubleshooting

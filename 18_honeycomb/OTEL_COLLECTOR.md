@@ -9,8 +9,8 @@ NOTES:
 
 TODO:
 
-* Load the apikey values from secrets.
 * Look at readiness values
+* Image pull transform json from events.
 
 ## Pulling OTEL Collector
 
