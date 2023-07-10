@@ -48,7 +48,8 @@ mkdir -p ./kubepug
 gh release download v1.4.0 -R rikatz/kubepug -p kubepug_darwin_amd64.tar.gz --output ./kubepug/kubepug_darwin_amd64.tar.gz
 
 ./kubepug/kubepug
-./kubepug/kubepug --context arn:aws:eks:us-east-1:378239092462:cluster/dev --k8s-version=v1.22.17 --api-walk
+./kubepug/kubepug --context arn:aws:eks:us-east-1:xxxxxxxxxxxx:cluster/mycluster --k8s-version=v1.23.17 --api-walk
+./kubepug/kubepug --k8s-version=v1.23.17 --api-walk
 ```
 
 ## 1.22 cluster

@@ -9,8 +9,10 @@ NOTES:
 
 TODO:
 
-* Look at readiness values
-* Image pull transform json from events.
+* Look at readiness values  
+* Image pull transform json from events.  https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor#parsing-json-logs
+* setup dashboards for otel collector - map metrics and alter module.
+* configure collector to pull labels - https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/k8sattributesprocessor
 
 ## Pulling OTEL Collector
 
@@ -84,9 +86,11 @@ set -a
 set +a
 # or
 export APIKEY=xxxxxxxxxxxxxxxxxxxx
-helm upgrade ${CHART_NAME}-daemonset --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-daemon-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Team=$APIKEY,config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data"
 
-helm upgrade ${CHART_NAME}-deployment --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-deployment-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Team=$APIKEY,config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data"
+# NOTE: Both daemonset and deployment can log to same collection - here they are different.
+helm upgrade ${CHART_NAME}-daemonset --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-daemon-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Team=$APIKEY,config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data-daemonset"
+
+helm upgrade ${CHART_NAME}-deployment --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./opentelemetry-collector-deployment-values.yaml --namespace ${CHART_NAME} --create-namespace --set "config.exporters.otlp.headers.X-Honeycomb-Team=$APIKEY,config.exporters.otlp.headers.X-Honeycomb-Dataset=otel-collector-data-deployment"
 
 kubectl get pods --all-namespaces
 ```
@@ -102,6 +106,7 @@ helm uninstall ${CHART_NAME}-deployment --namespace ${CHART_NAME}
 ## Resources
 
 * Collecting Kubernetes Data Using OpenTelemetry [here](https://www.honeycomb.io/blog/kubernetes-collector-opentelemetry)  
+* open-telemetry/opentelemetry-collector repo [here](https://github.com/open-telemetry/opentelemetry-collector)  
 * open-telemetry/opentelemetry-operator repo [here](https://github.com/open-telemetry/opentelemetry-operator)  
 * artifacthub opentelemetry-collector Helm chart [here](https://artifacthub.io/packages/helm/opentelemetry-helm/opentelemetry-collector)  
 * Provide ability to Load an Existing Secret or Create a New Secret to Datadog. [here](https://github.com/open-telemetry/opentelemetry-helm-charts/issues/31)  
