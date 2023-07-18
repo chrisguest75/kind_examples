@@ -5,6 +5,7 @@ REF: [terraform_examples/23_honeycomb/README.md](https://github.com/chrisguest75
 NOTES:
 
 * APIKEY needs permissions to modify columns and create queries.  
+* These dashboards do not work with the OTEL collector.  
 
 ## Create Dashboards
 
@@ -14,10 +15,13 @@ set -a
 . ./.env
 set +a
 
+# download modules and initialise
 terraform init
 
+# plan resources
 terraform plan --var-file=terraform.tfvars
 
+# create resoures
 terraform apply --var-file=terraform.tfvars --auto-approve 
 ```
 
@@ -25,6 +29,13 @@ terraform apply --var-file=terraform.tfvars --auto-approve
 
 ```sh
 TF_LOG_PROVIDER=debug terraform apply -auto-approve
+```
+
+## Cleanup
+
+```sh
+# delete resources
+terraform destory --var-file=terraform.tfvars 
 ```
 
 ## Resources

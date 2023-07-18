@@ -56,6 +56,9 @@ export APIKEY=xxxxxxxxxxxxxxxxxxxx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
 
 kubectl get pods --all-namespaces
+
+# goto ui and environment
+open https://ui.honeycomb.io/
 ```
 
 ## Install Honeycomb Dashboards
