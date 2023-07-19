@@ -27,6 +27,10 @@ watchers:
     labelSelector: "k8s-app=kube-dns"
     namespace: kube-system
     parser: glog
+  - dataset: kubernetes-logs
+    labelSelector: app=eventrouter
+    namespace: eventrouter
+    parser: glog
 
 metrics:
   enabled: true

@@ -17,6 +17,10 @@ variable "dataset" {
   type = string
 }
 
+variable "eventsdataset" {
+  type = string
+}
+
 # data "honeycombio_query_specification" "example" {
 #   calculation {
 #     op     = "AVG"

@@ -1,14 +1,13 @@
 # HONEYCOMB AGENT
 
-TODO:
-
-* Detect Back-off pulling image.  It's not in container metrics.  It's an event.  
+Demonstrate how to install the honeycomb agent with container metrics and eventrouter.  
 
 NOTES:
 
 * Ships logs to honeycomb
 * Ships node, pod and container metrics to honeycomb
 * `status.ready` is only available at the container level.
+* Documentation says you can set eventrouter to output `json`.  But this doesn't work as it prefixes with `glog` meaning the parser does not seem to work. `I0719 11:55:34.426020       1 glogsink.go:42] {"verb":"ADDED",`  
 
 ## Pulling Honeycomb Agent
 
@@ -64,6 +63,20 @@ kubectl get pods --all-namespaces
 
 # goto ui and environment
 open https://ui.honeycomb.io/
+```
+
+## Install EventRouter
+
+NOTE: To pull it locally use steps above with values below.  
+
+```sh
+export CHART_REPOSITORY=wikimedia
+export CHART_NAME=eventrouter
+export REPOSITORY_URL=https://helm-charts.wikimedia.org/stable/
+export CHART_VERSION=0.4.1
+
+# install it 
+helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME} --create-namespace --set sink=glog
 ```
 
 ## Install Honeycomb Dashboards

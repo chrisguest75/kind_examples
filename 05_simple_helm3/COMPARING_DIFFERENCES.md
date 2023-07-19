@@ -124,11 +124,26 @@ export REPOSITORY_URL=https://aws.github.io/secrets-store-csi-driver-provider-aw
 export CHART_VERSION=0.3.3
 ```
 
+## HEPTIO-EVENT-ROUTER
+
+eventrouter simple introspective kubernetes service that forwards events to a specified sink.
+
+```sh
+export CHART_REPOSITORY=wikimedia
+export CHART_NAME=eventrouter
+export REPOSITORY_URL=https://helm-charts.wikimedia.org/stable/
+export CHART_VERSION=0.4.1
+```
+
 ## PULLING, RENDERING & DIFFING
 
 ### Pulling
 
 ```sh
+# list current respositories
+helm repo list
+
+# add repo
 helm repo add ${CHART_REPOSITORY} ${REPOSITORY_URL}
 
 # find chart
@@ -186,7 +201,7 @@ cd ../..
 
 * artifacthub sealed-secrets [here](https://artifacthub.io/packages/helm/bitnami-labs/sealed-secrets)  
 * artifacthub aws-vpc-cni [here](https://artifacthub.io/packages/helm/aws/aws-vpc-cni)  
-* https://github.com/aws/amazon-vpc-cni-k8s
+* aws/amazon-vpc-cni-k8s [here](https://github.com/aws/amazon-vpc-cni-k8s)  
 * artifacthub cni-metrics-helper [here](https://artifacthub.io/packages/helm/aws/cni-metrics-helper)  
 * external-dns repo [here](https://github.com/kubernetes-sigs/external-dns)  
 * artifacthub external-dns [here](https://artifacthub.io/packages/helm/external-dns/external-dns)  
@@ -199,3 +214,4 @@ cd ../..
 * secrets-store-csi-driver-provider-aws repo [here](https://github.com/aws/secrets-store-csi-driver-provider-aws)
 * secrets-store-csi-driver-provider-aws [here](https://aws.github.io/secrets-store-csi-driver-provider-aws/)  
 * ingress-nginx [here](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx)  
+* eventrouter [here](https://github.com/heptiolabs/eventrouter)  
