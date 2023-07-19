@@ -2,6 +2,11 @@
 
 Demonstrate how to install the honeycomb agent with container metrics and eventrouter.  
 
+TODO:  
+
+* Add a failure type where the container cannot be placed.  
+* Where desired count cannot be accomodated.  
+
 NOTES:
 
 * Ships logs to honeycomb

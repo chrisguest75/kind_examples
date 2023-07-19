@@ -10,7 +10,8 @@ NOTES:
 TODO:
 
 * Add ingress
-* Work out how to monitor individual services from restarts, errimagepull, etc.
+* Add a failure type where the container cannot be placed.  
+* Where desired count cannot be accomodated.  
 
 ## Pulling
 
