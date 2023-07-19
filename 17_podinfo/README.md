@@ -73,20 +73,35 @@ open http://0.0.0.0:8080
 
 ## Injecting Failures
 
+Use flags in `podinfo` to cause common types of failure.  
+
 ```sh
 # install "the healthy state is never reached"
-helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unhealthy --create-namespace --set "faults.unhealthy=true"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unhealthy --create-namespace --set "faults.unhealthy=true,replicaCount=3"
 
 # install "the ready state is never reached"
-helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unready --create-namespace --set "faults.unready=true"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unready --create-namespace --set "faults.unready=true,replicaCount=3"
 
 # install "missing tag"
-helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-missingtag --create-namespace --set "image.tag=100.100.100"
+helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-missingtag --create-namespace --set "image.tag=100.100.100,replicaCount=3"
 
-# causes the healthy pods to crash (port-forward)
-open http://0.0.0.0:8080/panic
+# causes the healthy pods to crash (port-forward background)
+kubectl -n ${CHART_NAME}-healthy port-forward deploy/podinfo 8080:9898 & 
+curl http://0.0.0.0:8080/panic
 
 kubectl get pods --all-namespaces
+```
+
+## Fix Failures
+
+Use these to see how quickly the triggers resolve.  
+
+```sh
+helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}-unhealthy 
+
+helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}-unready 
+
+helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}-missingtag
 ```
 
 ## Remove
