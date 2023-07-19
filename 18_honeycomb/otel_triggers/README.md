@@ -1,4 +1,4 @@
-# HONEYCOMB TRIGGERS
+# HONEYCOMB OTEL COLLECTOR TRIGGERS
 
 REF: [terraform_examples/23_honeycomb/README.md](https://github.com/chrisguest75/terraform_examples/blob/master/23_honeycomb/README.md)  
 
