@@ -1,9 +1,14 @@
 # HONEYCOMB AGENT
 
+TODO:
+
+* Detect Back-off pulling image.  It's not in container metrics.  It's an event.  
+
 NOTES:
 
 * Ships logs to honeycomb
-* Ships node and pod metrics to honeycomb
+* Ships node, pod and container metrics to honeycomb
+* `status.ready` is only available at the container level.
 
 ## Pulling Honeycomb Agent
 
@@ -53,7 +58,7 @@ set -a
 set +a
 # or
 export APIKEY=xxxxxxxxxxxxxxxxxxxx
-helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} --set honeycomb.apiKey=$APIKEY
+helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./honeycomb-agent-values.yaml --set honeycomb.apiKey=$APIKEY
 
 kubectl get pods --all-namespaces
 

@@ -2,11 +2,15 @@
 
 REF: [terraform_examples/23_honeycomb/README.md](https://github.com/chrisguest75/terraform_examples/blob/master/23_honeycomb/README.md)  
 
-NOTES:
+NOTES:  
 
 * The trigger frequency "query duration cannot be more than 4 times the trigger frequency"
 * When copying queries from honeycomb "limit field not allowed for trigger query"
 * API says "slack target must begin with '#' or '@'"
+
+Triggers:
+
+* You can use `group by` in the trigger query and each group will be independently triggered on based on the condition in the trigger.  
 
 ## Create Triggers
 
