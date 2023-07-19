@@ -75,6 +75,8 @@ open http://0.0.0.0:8080
 
 Use flags in `podinfo` to cause common types of failure.  
 
+NOTE: You can install multiple types of failure to different namespaces.  
+
 ```sh
 # install "the healthy state is never reached"
 helm upgrade ${CHART_NAME} --version ${CHART_VERSION} --install ${CHART_REPOSITORY}/${CHART_NAME} --namespace ${CHART_NAME}-unhealthy --create-namespace --set "faults.unhealthy=true,replicaCount=3"
