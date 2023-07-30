@@ -8,7 +8,7 @@
 * Sidecar
 * Stateful set
 * Create a CRD
-* Metrics export
+* Metrics export - https://www.airplane.dev/blog/kubectl-top-pod-node-for-metrics finding out if the metrics api is installed. `kubectl top pods` will not work if not installed
 * Fluentd
 * Open census
 * Github actions with kuttl
