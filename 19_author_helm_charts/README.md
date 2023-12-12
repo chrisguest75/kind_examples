@@ -4,6 +4,16 @@ TODO:
 
 * Upload chart to docker registry and source it from there.  
 
+## Contents
+
+- [AUTHOR HELM CHARTS](#author-helm-charts)
+  - [Contents](#contents)
+  - [Author](#author)
+    - [Installation (Simple NGINX)](#installation-simple-nginx)
+  - [Reverse Proxy - Podinfo](#reverse-proxy---podinfo)
+    - [Installation (Podinfo)](#installation-podinfo)
+  - [Resources](#resources)
+
 ## Author
 
 ```sh
@@ -19,13 +29,13 @@ export CHART_NAME=simple-nginx
 helm template ${CHART_NAME} ./${CHART_NAME} -f ./${CHART_NAME}-values.yaml --namespace apps > ./render/${CHART_NAME}-render.yaml
 ```
 
-## Installation
+### Installation (Simple NGINX)
 
 ```sh
 # install
 helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ./${CHART_NAME} --namespace apps --create-namespace
 
-helm ls --all-namespaces                
+helm ls --all-namespaces
 
 # CHECK HOSTNAME IS ALWAYS THE SAME.
 curl http://localhost:8080/nginx-app
@@ -46,7 +56,7 @@ export CHART_NAME=custom-podinfo
 helm template ${CHART_NAME} ./${CHART_NAME} -f ./${CHART_NAME}-values.yaml --namespace apps > ./render/${CHART_NAME}-render.yaml
 ```
 
-## Installation
+### Installation (Podinfo)
 
 ```sh
 # install
