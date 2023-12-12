@@ -3,8 +3,8 @@
 replicaCount: 5
 logLevel: info
 host: #0.0.0.0
-backend: #http://backend-podinfo:9898/echo
-backends: []
+backend: http://localhost:8080/podinfo
+backends: [http://localhost:8080/podinfo]
 
 image:
   repository: ghcr.io/stefanprodan/podinfo
@@ -112,8 +112,8 @@ ingress:
   hosts:
     - host: localhost
       paths:
-        - path: /
-          pathType: ImplementationSpecific
+        - path: /podinfo(/|$)(.*)
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

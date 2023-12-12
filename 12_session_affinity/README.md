@@ -4,7 +4,8 @@ Create an example that uses the official `ingress-nginx` with session affinity
 
 TODO:
 
-* Add a container to the kind network and use ingress.  
+* Add a container to the kind network and use ingress to test affinity.  
+* Why doesn't the podinfo image work?  The api call in the page is not going to the correct endpoint http://localhost/podinfo/api/.  
 
 NOTES:
 
@@ -102,10 +103,14 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 helm upgrade -f ./${CHART_NAME}-values.yaml --install ${CHART_NAME} ${CHART_NAME} --version ${CHART_VERSION} --repo ${REPOSITORY_URL} --namespace ${CHART_NAME} --create-namespace
 
 # CHECK HOSTNAME IS ALWAYS THE SAME.
-curl http://localhost:8080/
+curl http://localhost:8080/podinfo
+
+kubectl -n ${CHART_NAME} port-forward deploy/podinfo 8081:9898
+open http://0.0.0.0:8081
 
 # remove chart
 helm uninstall ${CHART_NAME} --namespace ${CHART_NAME}
+helm ls --all-namespaces                    
 ```
 
 ## Compare with ingress chart
