@@ -3,6 +3,32 @@
 A repo for examples of Kubernetes features using Kind as a cluster  
 [KIND Docs](https://kind.sigs.k8s.io/docs/user/quick-start/)
 
+## Contents
+
+- [README](#readme)
+  - [Contents](#contents)
+  - [Installation](#installation)
+  - [Tools](#tools)
+  - [Describing Resources](#describing-resources)
+  - [Actions](#actions)
+  - [01 Creation](#01-creation)
+  - [03 deploy pods](#03-deploy-pods)
+  - [04 deployments](#04-deployments)
+  - [05 simple helm3](#05-simple-helm3)
+  - [06 volumes](#06-volumes)
+  - [07 localimages](#07-localimages)
+  - [08 skaffold](#08-skaffold)
+  - [09 hpa](#09-hpa)
+  - [10 flux](#10-flux)
+  - [11 ingress](#11-ingress)
+  - [12 session affinity](#12-session-affinity)
+  - [13 kubernetes dashboard](#13-kubernetes-dashboard)
+  - [15 upgrades](#15-upgrades)
+  - [16 sealed secrets](#16-sealed-secrets)
+  - [17 podinfo](#17-podinfo)
+  - [18 honeycomb](#18-honeycomb)
+  - [19 authoring helm charts](#19-authoring-helm-charts)
+
 ## Installation
 
 ```sh
@@ -112,3 +138,8 @@ Podinfo Helm chart for Kubernetes.
 
 Honeycomb Kubernetes Agent  
 [README.md](18_honeycomb/README.md)  
+
+## 19 authoring helm charts
+
+Authoring HELM charts.  
+[README.md](19_author_helm_charts/README.md)  

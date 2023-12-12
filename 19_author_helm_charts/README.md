@@ -1,5 +1,7 @@
 # AUTHOR HELM CHARTS
 
+Authoring HELM charts.  
+
 TODO:
 
 * Upload chart to docker registry and source it from there.  
