@@ -6,6 +6,12 @@ NOTES:
 
 * Works as an NPM cache
 
+TODO:
+
+* Configure NPM to use as a local cache.
+* Verify packages can be published
+* Configure htpasswd
+
 ## Pulling Verdaccio
 
 ```sh
@@ -40,6 +46,12 @@ touch ./charts/${CHART_NAME}-${CHART_VERSION}.yaml
 # or copy them over
 cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml
 
+
+# add the following to the values.yaml
+  extraEnvVars:
+  - name: VERDACCIO_PORT
+    value: "4873"
+
 helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
 ```
 
@@ -52,6 +64,13 @@ kubectx
 helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/verdaccio-4.0.0.yaml
 
 kubectl get pods --all-namespaces
+
+# check it works
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio" -o jsonpath="{.items[0].metadata.name}")
+export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+curl http://127.0.0.1:8080
 ```
 
 ## Resources
@@ -60,3 +79,4 @@ kubectl get pods --all-namespaces
 * Verdaccio Charts (Helm) [here](https://charts.verdaccio.org/)
 * verdaccio/verdaccio repos [here](https://github.com/verdaccio/verdaccio)
 * verdaccio/charts repos [here](https://github.com/verdaccio/charts)
+* Trying to get https working with dockerfile [#182](https://github.com/verdaccio/verdaccio/issues/182)
