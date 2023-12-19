@@ -66,6 +66,10 @@ kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
 curl http://127.0.0.1:8080
 ```
 
+## Use registry
+
+Goto [simple-express/README.md](simple-express/README.md)  
+
 ## Resources
 
 * Verdaccio - A lightweight Node.js private proxy registry [here](https://verdaccio.org/)
