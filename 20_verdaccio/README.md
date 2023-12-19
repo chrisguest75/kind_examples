@@ -8,7 +8,7 @@ TODO:
 * Verify packages can be published
 * Configure htpasswd
 * Metrics
-* Plugins
+* Plugins - change image to local one with plugins
 
 ## Reason
 
