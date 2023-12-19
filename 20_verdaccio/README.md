@@ -26,6 +26,13 @@ kind create cluster --config 1node_1_24_cluster.yaml --name kind-1-24
 
 Install [VERDACCIO.md](./VERDACCIO.md)  
 
+## Testing
+
+```sh
+# testing proxy
+curl http://127.0.0.1:8080/@chrisguest75/npx_palette | jq . 
+```
+
 ## Remove Cluster
 
 ```sh
