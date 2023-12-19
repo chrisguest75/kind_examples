@@ -2,6 +2,12 @@
 
 Demonstrate how to configure `verdaccio` npm cache locally on `Kind`  
 
+TODO:
+
+* Configure NPM to use as a local cache.
+* Verify packages can be published
+* Configure htpasswd
+
 ## Reason
 
 A local NPM cache.  

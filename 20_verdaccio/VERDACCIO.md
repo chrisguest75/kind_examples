@@ -6,12 +6,6 @@ NOTES:
 
 * Works as an NPM cache
 
-TODO:
-
-* Configure NPM to use as a local cache.
-* Verify packages can be published
-* Configure htpasswd
-
 ## Pulling Verdaccio
 
 ```sh
@@ -19,6 +13,7 @@ export CHART_REPOSITORY=verdaccio
 export CHART_NAME=verdaccio
 export REPOSITORY_URL=https://charts.verdaccio.org
 export CHART_VERSION=4.0.0
+export CHART_VERSION=4.12.0
 ```
 
 ```sh
@@ -46,13 +41,11 @@ touch ./charts/${CHART_NAME}-${CHART_VERSION}.yaml
 # or copy them over
 cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml
 
+# set the verdaccio port (otherwise service crashes)
+yq e '.extraEnvVars += [{"name": "VERDACCIO_PORT", "value": "4873"}]' ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml > ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml
 
-# add the following to the values.yaml
-  extraEnvVars:
-  - name: VERDACCIO_PORT
-    value: "4873"
-
-helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
+# render chart for diffing
+helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
 ```
 
 ## Install Verdaccio
@@ -61,7 +54,7 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 # check the context
 kubectx
 # install
-helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/verdaccio-4.0.0.yaml
+helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml
 
 kubectl get pods --all-namespaces
 

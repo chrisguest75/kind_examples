@@ -5,6 +5,8 @@ Authoring HELM charts.
 TODO:
 
 * Upload chart to docker registry and source it from there.  
+* Add a helpers template
+* Also a notes.txt (look at verdaccio helm chart) on installation it prints them out.
 
 ## Contents
 
