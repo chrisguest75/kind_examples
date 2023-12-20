@@ -1,3 +1,4 @@
 .env
 charts
 .DS_Store
+node_modules

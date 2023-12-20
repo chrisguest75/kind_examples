@@ -1,0 +1,71 @@
+# VERDACCIO PLUGINS
+
+Start a verdaccio server with plugins in kind.  
+
+Requires pushing the image into kind first [here](./plugins/README.md)  
+
+TODO:
+
+* The metrics are not working in kind yet.  
+
+## Pulling Verdaccio
+
+```sh
+export CHART_REPOSITORY=verdaccio
+export CHART_NAME=verdaccio
+export REPOSITORY_URL=https://charts.verdaccio.org
+export CHART_VERSION=4.12.0
+```
+
+```sh
+helm repo add ${CHART_REPOSITORY} ${REPOSITORY_URL}
+
+# find chart
+helm search repo ${CHART_REPOSITORY}
+# find versions of a chart 
+helm search repo ${CHART_REPOSITORY}/${CHART_NAME} --versions
+
+# pull chart
+mkdir -p ./charts
+helm pull ${CHART_REPOSITORY}/${CHART_NAME} --version ${CHART_VERSION} --untar --untardir ./charts/${CHART_NAME}-${CHART_VERSION}
+```
+
+### Render Verdaccio
+
+Render the charts as a single file so they can be easily diffed and reviewed.  
+
+```sh
+cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml
+
+# set the verdaccio port (otherwise service crashes)
+yq e '.extraEnvVars += [{"name": "VERDACCIO_PORT", "value": "4873"}]' ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml > ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml
+
+# replace image
+yq e '(.image) += {"repository": "docker.io/library/verdaccio.prometheus", "tag": "latest"}' ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml > ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed2.yaml
+
+```
+
+## Install Verdaccio
+
+```sh
+# check the context
+kubectx
+# install
+helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed2.yaml
+
+kubectl get pods --all-namespaces
+kubectl describe pods --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio"
+kubectl logs --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio"
+
+# check it works
+export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio" -o jsonpath="{.items[0].metadata.name}")
+export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+curl http://127.0.0.1:8080
+
+# THIS IS NOT WORKING YET
+curl http://localhost:8080/custom/path/metrics
+```
+
+## Resources
