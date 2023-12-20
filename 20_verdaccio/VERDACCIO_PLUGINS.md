@@ -1,10 +1,12 @@
-# VERDACCIO
+# VERDACCIO PLUGINS
 
-Demonstrate how to install vedaccio npm proxy.  
+Start a verdaccio server with plugins in kind.  
 
-NOTES:
+Requires pushing the image into kind first [here](./plugins/README.md)  
 
-* Works as an NPM cache
+TODO:
+
+* The metrics are not working in kind yet.  
 
 ## Pulling Verdaccio
 
@@ -12,7 +14,6 @@ NOTES:
 export CHART_REPOSITORY=verdaccio
 export CHART_NAME=verdaccio
 export REPOSITORY_URL=https://charts.verdaccio.org
-export CHART_VERSION=4.0.0
 export CHART_VERSION=4.12.0
 ```
 
@@ -34,18 +35,14 @@ helm pull ${CHART_REPOSITORY}/${CHART_NAME} --version ${CHART_VERSION} --untar -
 Render the charts as a single file so they can be easily diffed and reviewed.  
 
 ```sh
-# get values 
-helm get values ${CHART_NAME} -n mynamespace > ./charts/${CHART_NAME}-${CHART_VERSION}.yaml
-# or create blank file
-touch ./charts/${CHART_NAME}-${CHART_VERSION}.yaml
-# or copy them over
 cp ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}/values.yaml ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml
 
 # set the verdaccio port (otherwise service crashes)
 yq e '.extraEnvVars += [{"name": "VERDACCIO_PORT", "value": "4873"}]' ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values.yaml > ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml
 
-# render chart for diffing
-helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml --namespace kube-system > ./charts/${CHART_NAME}-${CHART_VERSION}-test.yaml
+# replace image
+yq e '(.image) += {"repository": "docker.io/library/verdaccio.prometheus", "tag": "latest"}' ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml > ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed2.yaml
+
 ```
 
 ## Install Verdaccio
@@ -54,9 +51,11 @@ helm template ${CHART_NAME} ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME
 # check the context
 kubectx
 # install
-helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed.yaml
+helm upgrade ${CHART_NAME} --install ${CHART_REPOSITORY}/${CHART_NAME} -f ./charts/${CHART_NAME}-${CHART_VERSION}/${CHART_NAME}-values-fixed2.yaml
 
 kubectl get pods --all-namespaces
+kubectl describe pods --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio"
+kubectl logs --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio"
 
 # check it works
 export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=verdaccio,app.kubernetes.io/instance=verdaccio" -o jsonpath="{.items[0].metadata.name}")
@@ -64,16 +63,9 @@ export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpat
 kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
 
 curl http://127.0.0.1:8080
+
+# THIS IS NOT WORKING YET
+curl http://localhost:8080/custom/path/metrics
 ```
 
-## Use registry
-
-Goto [simple-express/README.md](simple-express/README.md)  
-
 ## Resources
-
-* Verdaccio - A lightweight Node.js private proxy registry [here](https://verdaccio.org/)
-* Verdaccio Charts (Helm) [here](https://charts.verdaccio.org/)
-* verdaccio/verdaccio repos [here](https://github.com/verdaccio/verdaccio)
-* verdaccio/charts repos [here](https://github.com/verdaccio/charts)
-* Trying to get https working with dockerfile [#182](https://github.com/verdaccio/verdaccio/issues/182)

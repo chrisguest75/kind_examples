@@ -34,4 +34,4 @@ open http://localhost:3000
 
 ## Resources
 
-* https://stackoverflow.com/questions/59478090/how-to-create-offline-private-registry-of-verdaccio
+* How to create offline private registry of verdaccio [here](https://stackoverflow.com/questions/59478090/how-to-create-offline-private-registry-of-verdaccio)
