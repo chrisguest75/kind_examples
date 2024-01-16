@@ -1,14 +1,37 @@
-# FLUX
+# FLUXV2
 
-Demonstrate how to get flux running on a cluster  
+Demonstrate how to get `FluxV2` running on a cluster  
 
-## Create
+TODO:
+
+* bootstrap with terraform https://fluxcd.io/flux/installation/#bootstrap-with-terraform
+* gh cli personal access token?
+* 
+
+## Contents
+
+- [FLUXV2](#fluxv2)
+  - [Contents](#contents)
+  - [Clusters](#clusters)
+  - [Prerequisites](#prerequisites)
+  - [Install](#install)
+  - [Deploy](#deploy)
+  - [Test](#test)
+  - [Cleanup](#cleanup)
+  - [Remove Cluster](#remove-cluster)
+  - [Resources](#resources)
+
+## Clusters
+
+Create a versioned single node cluster.  
 
 ```sh
-kind create cluster --name fluxkind --wait 1m  
+kind create cluster --config 1node_1_27_cluster.yaml --name kind-1-27
 ```
 
 ## Prerequisites
+
+Install and check prerequisites.  
 
 ```sh
 brew install fluxcd/tap/flux
@@ -90,9 +113,20 @@ flux delete source git webapp-latest
 flux uninstall
 ```
 
+## Remove Cluster
+
+```sh
+kind get clusters   
+
+kind delete -v 10 cluster --name kind-1-27
+
+kubectx -d kind-1-27
+```
+
 ## Resources
 
 * Get Started with Flux [here](https://fluxcd.io/flux/get-started/)
 * fluxcd/flux2 [here](https://github.com/fluxcd/flux2)
 * This guide walks you through setting up Flux to manage one or more Kubernetes clusters. [here](https://fluxcd.io/flux/installation/)  
 * stefanprodan/podinfo repo [here](https://github.com/stefanprodan/podinfo)  
+https://www.gitops.tech/#what-is-gitops
