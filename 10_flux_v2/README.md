@@ -62,6 +62,7 @@ flux check --pre
 kubectx
 
 # source GITHUB_TOKEN
+# NOTE: When creating the token Github settings -> "Developer Settings" tokens classic and just give access to "repos" only.  
 . ./.env
 
 # bootstrap the cluster
@@ -189,4 +190,5 @@ kubectx -d kind-1-27
 * fluxcd/flux2 [here](https://github.com/fluxcd/flux2)
 * This guide walks you through setting up Flux to manage one or more Kubernetes clusters. [here](https://fluxcd.io/flux/installation/)  
 * stefanprodan/podinfo repo [here](https://github.com/stefanprodan/podinfo)  
-* https://www.gitops.tech/#what-is-gitops
+* What is GitOps? [here](https://www.gitops.tech/#what-is-gitops)  
+* Personal Access Tokens [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)  

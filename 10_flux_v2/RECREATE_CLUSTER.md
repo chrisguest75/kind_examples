@@ -35,3 +35,6 @@ k9s
 ```
 
 ## Resources
+
+* Get Started with Flux [here](https://fluxcd.io/flux/get-started/)
+* fluxcd/flux2 [here](https://github.com/fluxcd/flux2)
