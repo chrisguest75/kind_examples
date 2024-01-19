@@ -3,10 +3,10 @@
 Demonstrate how to get `FluxV2` running on a cluster  
 
 TODO:
-
+ 
+* What is the kustomize path?
 * bootstrap with terraform https://fluxcd.io/flux/installation/#bootstrap-with-terraform
 * gh cli personal access token?
-* sync existing repo against a new cluster.  
 
 ## Terminology
 
@@ -14,8 +14,9 @@ TODO:
 
 ## Notes
 
+* You store references to repos in the deployment repo.
 * You can push to OCI artifacts instead of a git repository. This means you only need one credential on the cluster.  
-
+* The resync time is controlled by the `--interval` when creating the resource.  
 
 ## Contents
 
@@ -93,7 +94,7 @@ flux create source git podinfo \
   --interval=1m \
   --export > ./clusters/kind-kind-1-27/podinfo-source.yaml
 
-#
+# commit and sync
 git add -A && git commit -m "Add podinfo GitRepository"
 git push
 
@@ -164,7 +165,7 @@ flux export kustomization --all
 # Resume a Kustomization reconciliation
 flux resume kustomization podinfo
 
-# Delete a Kustomization (not sure what this really does - it doesn't modify repo)
+# Delete a Kustomization (this will delete until the repos resyncs based on --interval)
 flux delete kustomization podinfo
 kubectl get pods --all-namespaces
 
