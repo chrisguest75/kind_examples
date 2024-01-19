@@ -22,7 +22,7 @@ A repo for examples of Kubernetes features using Kind as a cluster
   - [07 localimages](#07-localimages)
   - [08 skaffold](#08-skaffold)
   - [09 hpa](#09-hpa)
-  - [10 flux](#10-flux)
+  - [10 fluxv2](#10-fluxv2)
   - [11 ingress](#11-ingress)
   - [12 session affinity](#12-session-affinity)
   - [13 kubernetes dashboard](#13-kubernetes-dashboard)
@@ -117,10 +117,10 @@ Demonstrates how to configure skaffold to work with kind
 Demonstrate how to use the HPA for scaling.  
 [README.md](09_hpa/README.md)  
 
-## 10 flux
+## 10 fluxv2
 
-Demonstrate how to get flux running on a cluster  
-[README.md](10_flux/README.md)  
+Demonstrate how to get `FluxV2` running on a cluster  
+[README.md](10_flux_v2/README.md)  
 
 ## 11 ingress
 
