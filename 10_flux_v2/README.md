@@ -6,18 +6,30 @@ TODO:
 
 * bootstrap with terraform https://fluxcd.io/flux/installation/#bootstrap-with-terraform
 * gh cli personal access token?
-* 
+* sync existing repo against a new cluster.  
+
+## Terminology
+
+* gotk - GitOps Toolkit
+
+## Notes
+
+* You can push to OCI artifacts instead of a git repository. This means you only need one credential on the cluster.  
+
 
 ## Contents
 
 - [FLUXV2](#fluxv2)
+  - [Terminology](#terminology)
+  - [Notes](#notes)
   - [Contents](#contents)
   - [Clusters](#clusters)
   - [Prerequisites](#prerequisites)
   - [Install](#install)
   - [Deploy](#deploy)
   - [Test](#test)
-  - [Cleanup](#cleanup)
+  - [Modification](#modification)
+  - [Manage](#manage)
   - [Remove Cluster](#remove-cluster)
   - [Resources](#resources)
 
@@ -45,18 +57,45 @@ flux check --pre
 ## Install
 
 ```sh
-# Install the latest version of Flux
-flux install
+# check your connection
+kubectx
+
+# source GITHUB_TOKEN
+. ./.env
+
+# bootstrap the cluster
+flux bootstrap github \
+  --token-auth \
+  --owner=${GITHUB_USER} \
+  --repository=fluxv2_deployment_test \
+  --branch=main \
+  --path=clusters/kind-kind-1-27 \
+  --personal
+
+# open k9s
+k9s
 ```
 
 ## Deploy
 
 ```sh
+# sync repo locally.
+git clone git@github.com:chrisguest75/fluxv2_deployment_test.git
+```
+
+NOTE: This must all be done in the `fluxv2_deployment_test` repo
+
+```sh
 # Create a source for a public Git repository
-flux create source git webapp-latest \
-    --url=https://github.com/stefanprodan/podinfo \
-    --branch=master \
-    --interval=3m
+flux create source git podinfo \
+  --url=https://github.com/stefanprodan/podinfo \
+  --branch=master \
+  --interval=1m \
+  --export > ./clusters/kind-kind-1-27/podinfo-source.yaml
+
+#
+git add -A && git commit -m "Add podinfo GitRepository"
+git push
 
 # List GitRepository sources and their status
 flux get sources git
@@ -65,52 +104,72 @@ flux get sources git
 flux reconcile source git flux-system
 
 # Export GitRepository sources in YAML format
-flux export source git --all > sources.yaml
+mkdir -p ./out
+flux export source git --all > ./out/sources.yaml
 
 # Create a Kustomization for deploying a series of microservices
-flux create kustomization webapp-dev \
---source=webapp-latest \
---path="./deploy/webapp/" \
---prune=true \
---interval=5m \
---health-check="Deployment/backend.webapp" \
---health-check="Deployment/frontend.webapp" \
---health-check-timeout=2m
+flux create kustomization podinfo \
+  --target-namespace=default \
+  --source=podinfo \
+  --path="./kustomize" \
+  --prune=true \
+  --wait=true \
+  --interval=30m \
+  --retry-interval=2m \
+  --health-check-timeout=3m \
+  --export > ./clusters/kind-kind-1-27/podinfo-kustomization.yaml
+
+git add -A && git commit -m "Add podinfo Kustomization"
+git push
 
 # Trigger a git sync of the Kustomization's source and apply changes
-flux reconcile kustomization webapp-dev --with-source
+flux reconcile kustomization podinfo --with-source
 ```
 
 ## Test
 
 ```sh
-# port forwarding
-kubectl get pods -n webapp backend-7bbcb4f675-wf94j -o yaml  
-kubectl get pods -n webapp frontend-6bcfd55d7d-2d8wq -o yaml  
-kubectl --namespace webapp port-forward frontend-6bcfd55d7d-2d8wq 9898
+# port forwarding  
+kubectl --namespace default port-forward $(kubectl get pods --no-headers --all-namespaces --selector=app=podinfo -o custom-columns=NAME:.metadata.name | head -n 1) 9898
 ```
 
-## Cleanup
+## Modification
+
+* Patching kustomize `podinfo-kustomization.yaml`
+
+```yaml
+spec:
+  patches:
+    - patch: |-
+        apiVersion: autoscaling/v2
+        kind: HorizontalPodAutoscaler
+        metadata:
+          name: podinfo
+        spec:
+          minReplicas: 3             
+      target:
+        name: podinfo
+        kind: HorizontalPodAutoscaler
+```
+
+## Manage
 
 ```sh
 # Suspend a Kustomization reconciliation
-flux suspend kustomization webapp-dev
+flux suspend kustomization podinfo
 
 # Export Kustomizations in YAML format
-flux export kustomization --all > kustomizations.yaml
+flux export kustomization --all 
 
 # Resume a Kustomization reconciliation
-flux resume kustomization webapp-dev
+flux resume kustomization podinfo
 
-# Delete a Kustomization
-flux delete kustomization webapp-dev
+# Delete a Kustomization (not sure what this really does - it doesn't modify repo)
+flux delete kustomization podinfo
 kubectl get pods --all-namespaces
 
 # Delete a GitRepository source
-flux delete source git webapp-latest
-
-# Uninstall Flux and delete CRDs
-flux uninstall
+flux delete source git podinfo
 ```
 
 ## Remove Cluster
@@ -129,4 +188,4 @@ kubectx -d kind-1-27
 * fluxcd/flux2 [here](https://github.com/fluxcd/flux2)
 * This guide walks you through setting up Flux to manage one or more Kubernetes clusters. [here](https://fluxcd.io/flux/installation/)  
 * stefanprodan/podinfo repo [here](https://github.com/stefanprodan/podinfo)  
-https://www.gitops.tech/#what-is-gitops
+* https://www.gitops.tech/#what-is-gitops
