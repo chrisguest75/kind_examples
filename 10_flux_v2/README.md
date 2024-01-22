@@ -3,10 +3,10 @@
 Demonstrate how to get `FluxV2` running on a cluster  
 
 TODO:
-
+ 
+* What is the kustomize path?
 * bootstrap with terraform https://fluxcd.io/flux/installation/#bootstrap-with-terraform
 * gh cli personal access token?
-* sync existing repo against a new cluster.  
 
 ## Terminology
 
@@ -14,8 +14,9 @@ TODO:
 
 ## Notes
 
+* You store references to repos in the deployment repo.
 * You can push to OCI artifacts instead of a git repository. This means you only need one credential on the cluster.  
-
+* The resync time is controlled by the `--interval` when creating the resource.  
 
 ## Contents
 
@@ -61,6 +62,7 @@ flux check --pre
 kubectx
 
 # source GITHUB_TOKEN
+# NOTE: When creating the token Github settings -> "Developer Settings" tokens classic and just give access to "repos" only.  
 . ./.env
 
 # bootstrap the cluster
@@ -93,7 +95,7 @@ flux create source git podinfo \
   --interval=1m \
   --export > ./clusters/kind-kind-1-27/podinfo-source.yaml
 
-#
+# commit and sync
 git add -A && git commit -m "Add podinfo GitRepository"
 git push
 
@@ -164,7 +166,7 @@ flux export kustomization --all
 # Resume a Kustomization reconciliation
 flux resume kustomization podinfo
 
-# Delete a Kustomization (not sure what this really does - it doesn't modify repo)
+# Delete a Kustomization (this will delete until the repos resyncs based on --interval)
 flux delete kustomization podinfo
 kubectl get pods --all-namespaces
 
@@ -188,4 +190,5 @@ kubectx -d kind-1-27
 * fluxcd/flux2 [here](https://github.com/fluxcd/flux2)
 * This guide walks you through setting up Flux to manage one or more Kubernetes clusters. [here](https://fluxcd.io/flux/installation/)  
 * stefanprodan/podinfo repo [here](https://github.com/stefanprodan/podinfo)  
-* https://www.gitops.tech/#what-is-gitops
+* What is GitOps? [here](https://www.gitops.tech/#what-is-gitops)  
+* Personal Access Tokens [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)  
