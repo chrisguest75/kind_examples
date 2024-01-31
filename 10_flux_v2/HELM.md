@@ -4,9 +4,9 @@ You've built a cluster following [README.md](./README.md)
 
 [17_podinfo/README.md](../17_podinfo/README.md)
 
-TODO:
+NOTES:
 
-* THIS IS NOT WORKING CORRECTLY
+* If it is not deploying then check that the helmrepository resource exists in the correct namespace.  
 
 ## Add Helm
 
@@ -56,6 +56,8 @@ git push
 # it installs a sources "failed to get source: HelmRepository.source.toolkit.fluxcd.io "podinfo" not found"
 flux get sources all -A
 
+# check the helm repository sourcde exists
+flux get all -A
 
 flux get helmreleases -n default
 ```
